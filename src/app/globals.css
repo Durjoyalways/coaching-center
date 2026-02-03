@@ -1,4 +1,20 @@
 @import "tailwindcss";
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
+:root {
+  --font-sans: var(--font-hind-siliguri), ui-sans-serif, system-ui;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+/* প্রফেশনাল গ্লো হোভার ইফেক্ট */
+.hover-glow {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-glow:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px -15px rgba(59, 130, 246, 0.25);
+  border-color: rgba(59, 130, 246, 0.5);
+}
