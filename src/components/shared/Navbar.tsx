@@ -102,7 +102,9 @@ export default function Navbar() {
                 </div>
                 <Link href="/profile" className="block px-6 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 font-bold transition-colors">আমার প্রোফাইল</Link>
                 {userData?.role === "admin" && (
-                  <Link href="/notice" className="block px-6 py-3 text-sm text-blue-600 hover:bg-blue-50 font-black transition-colors">+ Add Notice</Link>
+                  <Link href="/add-notice" className="block px-6 py-3 text-sm text-blue-600 hover:bg-blue-50 font-black transition-colors">
+                    + নোটিশ যুক্ত করুন
+                  </Link>
                 )}
                 <div className="px-4 mt-2">
                   <button onClick={handleLogout} className="w-full bg-red-50 text-red-600 py-3 rounded-2xl font-black text-sm hover:bg-red-600 hover:text-white transition-all border border-red-100">
@@ -140,9 +142,9 @@ export default function Navbar() {
               <li key={link.href}><Link href={link.href} onClick={() => setIsMenuOpen(false)} className="hover:text-green-600 block text-lg">{link.label}</Link></li>
             ))}
             <div className="h-[1px] bg-gray-200/50 my-2"></div>
-            {user ? (
+            {user ? ( 
               <>
-                {userData?.role === "admin" && <li><Link href="/notice" onClick={() => setIsMenuOpen(false)} className="text-blue-600 text-lg">+ Add Notice</Link></li>}
+                {userData?.role === "admin" && <li><Link href="/add-notice" onClick={() => setIsMenuOpen(false)} className="text-blue-600 text-lg">+ নোটিশ যুক্ত করুন</Link></li>}
                 <li>
                   <button onClick={handleLogout} className="w-full bg-red-50 text-red-600 py-4 rounded-2xl font-black text-lg border border-red-100">লগআউট</button>
                 </li>
