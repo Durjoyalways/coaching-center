@@ -1,5 +1,25 @@
 @import "tailwindcss";
 
+@theme {
+  /* কাস্টম এনিমেশন ডিফাইন করা হচ্ছে */
+  --animate-spin-slow: spin 15s linear infinite;
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-bounce-slow: bounce 5s infinite;
+  /* নতুন মারকিউ এনিমেশন যোগ করা হলো */
+  --animate-marquee: marquee 35s linear infinite;
+
+  /* এনিমেশন কীভাবে কাজ করবে (Keyframes) */
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+}
+
 :root {
   --font-sans: var(--font-hind-siliguri), ui-sans-serif, system-ui;
 }

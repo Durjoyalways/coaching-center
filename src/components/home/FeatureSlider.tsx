@@ -3,60 +3,74 @@
 import React from "react";
 
 const FeatureSlider: React.FC = () => {
-  // শুধুমাত্র হালকা সবুজ এবং হালকা হলুদ থিম ব্যবহার করা হয়েছে
   const items = [
-    { name: "গণিত", color: "bg-green-50 text-green-700 border-green-100" },
-    { name: "পদার্থবিজ্ঞান", color: "bg-yellow-50 text-yellow-700 border-yellow-100" },
-    { name: "রসায়ন", color: "bg-green-50 text-green-700 border-green-100" },
-    { name: "ইংরেজি স্পোকেন", color: "bg-yellow-50 text-yellow-700 border-yellow-100" },
-    { name: "জীববিজ্ঞান", color: "bg-green-50 text-green-700 border-green-100" },
-    { name: "উচ্চতর গণিত", color: "bg-yellow-50 text-yellow-700 border-yellow-100" },
-    { name: "সাপ্তাহিক মডেল টেস্ট", color: "bg-green-50 text-green-700 border-green-100" },
-    { name: "বিগত বছরের প্রশ্ন সলভ", color: "bg-yellow-50 text-yellow-700 border-yellow-100" },
-    { name: "অভিজ্ঞ শিক্ষক মন্ডলী", color: "bg-green-50 text-green-700 border-green-100" },
+    { name: "গণিত", icon: "📐", glow: "shadow-emerald-200/50", border: "border-emerald-100" },
+    { name: "পদার্থবিজ্ঞান", icon: "⚛️", glow: "shadow-orange-200/50", border: "border-orange-100" },
+    { name: "রসায়ন", icon: "🧪", glow: "shadow-blue-200/50", border: "border-blue-100" },
+    { name: "ইংরেজি স্পোকেন", icon: "🗣️", glow: "shadow-purple-200/50", border: "border-purple-100" },
+    { name: "জীববিজ্ঞান", icon: "🧬", glow: "shadow-green-200/50", border: "border-green-100" },
+    { name: "উচ্চতর গণিত", icon: "📊", glow: "shadow-yellow-200/50", border: "border-yellow-100" },
+    { name: "মডেল টেস্ট", icon: "📝", glow: "shadow-rose-200/50", border: "border-rose-100" },
+    { name: "প্রশ্ন সলভ", icon: "🔍", glow: "shadow-cyan-200/50", border: "border-cyan-100" },
+    { name: "সেরা শিক্ষক", icon: "👨‍🏫", glow: "shadow-indigo-200/50", border: "border-indigo-100" },
   ];
 
   return (
-    <div className="py-12 bg-white overflow-hidden border-b border-slate-50">
-      <div className="max-w-7xl mx-auto px-6 mb-8 text-center">
-        {/* ছোট আইকন সহ টাইটেল */}
-        <div className="flex items-center justify-center gap-2 mb-2">
-            <span className="w-8 h-[2px] bg-green-200"></span>
-            <h3 className="text-slate-400 font-bold uppercase tracking-[0.2em] text-[10px] lg:text-xs">
+    <div className="relative py-20 bg-[#fcfcfc] overflow-hidden">
+      
+      {/* 🌌 Background Glowing Decorations */}
+      <div className="absolute inset-0 pointer-events-none select-none">
+        <div className="absolute top-0 left-10 text-6xl opacity-10 animate-float"
+             style={{ filter: 'drop-shadow(0 0 10px rgba(34, 197, 94, 0.4))' }}>🧪</div>
+        <div className="absolute bottom-0 right-10 text-6xl opacity-10 animate-spin-slow"
+             style={{ filter: 'drop-shadow(0 0 10px rgba(59, 130, 246, 0.4))' }}>⚛️</div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 mb-14 text-center relative z-10">
+        {/* মডার্ন পালসিং ব্যাজ */}
+        <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-white border border-slate-100 mb-6 shadow-sm">
+            <span className="flex h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
+            <h3 className="text-slate-500 font-black uppercase tracking-[0.3em] text-[10px] lg:text-xs">
               আমাদের বিশেষত্ব ও সেবাসমূহ
             </h3>
-            <span className="w-8 h-[2px] bg-green-200"></span>
         </div>
+        <h2 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight">
+          সবকিছু <span className="text-green-500">এক জায়গায়</span>
+        </h2>
       </div>
 
       {/* স্লাইডার কন্টেইনার */}
-      <div className="relative flex overflow-x-hidden group">
-        <div className="flex animate-marquee whitespace-nowrap py-2">
+      <div className="relative flex items-center group">
+        
+        {/* দুই পাশে প্রফেশনাল ফেড ইফেক্ট (Glass Mask) */}
+        <div className="absolute left-0 w-32 md:w-64 h-full bg-gradient-to-r from-[#fcfcfc] via-[#fcfcfc]/80 to-transparent z-20 pointer-events-none" />
+        <div className="absolute right-0 w-32 md:w-64 h-full bg-gradient-to-l from-[#fcfcfc] via-[#fcfcfc]/80 to-transparent z-20 pointer-events-none" />
+
+        {/* এনিমেটেড স্লাইডার */}
+        <div className="flex animate-marquee whitespace-nowrap hover:[animation-play-state:paused] py-8 z-10">
           {[...items, ...items].map((item, index) => (
             <div
               key={index}
-              className={`mx-4 lg:mx-6 px-6 py-3 rounded-full flex items-center justify-center border shadow-sm transition-all duration-300 hover:shadow-md cursor-default ${item.color}`}
+              className={`mx-4 lg:mx-6 px-8 py-5 rounded-[28px] flex items-center gap-4 border-2 border-white bg-white/70 backdrop-blur-md shadow-[0_10px_30px_rgba(0,0,0,0.03)] transition-all duration-500 hover:scale-110 hover:-translate-y-2 cursor-pointer group/item hover:bg-white hover:border-green-100`}
             >
-              <span className="font-bold text-base lg:text-lg tracking-tight">
+              {/* Icon Holder with Glow */}
+              <div className="text-3xl transform group-hover/item:rotate-12 transition-transform duration-500 drop-shadow-sm">
+                {item.icon}
+              </div>
+              
+              <span className="font-black text-lg lg:text-2xl text-slate-700 tracking-tight group-hover/item:text-green-600 transition-colors">
                 {item.name}
               </span>
+              
+              {/* Inner Accent Dot */}
+              <div className="w-1.5 h-1.5 rounded-full bg-green-200 group-hover/item:bg-green-500 transition-all"></div>
             </div>
           ))}
         </div>
       </div>
 
-      <style jsx>{`
-        @keyframes marquee {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-marquee {
-          animation: marquee 35s linear infinite;
-        }
-        .animate-marquee:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
+      {/* স্লাইডারটির নিচে একটি হালকা শেড */}
+      <div className="max-w-4xl mx-auto h-[1px] bg-gradient-to-r from-transparent via-slate-100 to-transparent mt-12 opacity-50"></div>
     </div>
   );
 };
