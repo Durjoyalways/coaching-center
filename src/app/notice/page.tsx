@@ -4,10 +4,12 @@ import React, { useEffect, useState } from "react";
 import { db, auth } from "@/lib/firebase";
 import { collection, query, orderBy, onSnapshot, doc, deleteDoc, getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function NoticeBoard() {
   const [notices, setNotices] = useState<any[]>([]);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [selectedNotice, setSelectedNotice] = useState<any>(null);
 
   useEffect(() => {
     // অ্যাডমিন চেক
@@ -32,66 +34,136 @@ export default function NoticeBoard() {
     };
   }, []);
 
-  const handleDelete = async (id: string) => {
-    if (window.confirm("আপনি কি নিশ্চিত যে এই নোটিশটি মুছে ফেলতে চান?")) {
-      try {
-        await deleteDoc(doc(db, "notices", id));
-        alert("নোটিশটি মুছে ফেলা হয়েছে।");
-      } catch (error) {
-        alert("মুছে ফেলতে সমস্যা হয়েছে।");
-      }
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-[#f4fcf0] pt-32 pb-20 px-6">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-black text-center text-slate-900 mb-12">নোটিশ <span className="text-green-600">বোর্ড</span></h1>
-        
-        <div className="grid gap-6">
-          {notices.map((n) => (
-            <div key={n.id} className="bg-white/80 backdrop-blur-md p-8 rounded-[35px] border border-white shadow-sm relative group">
-              <div className="flex justify-between items-start mb-4">
-                <span className="bg-green-100 text-green-700 px-4 py-1 rounded-full text-[11px] font-black uppercase">
-                  {n.dateString}
-                </span>
-                
-                {/* অ্যাডমিন ডিলিট বাটন */}
-                {isAdmin && (
-                  <button 
-                    onClick={() => handleDelete(n.id)}
-                    className="text-red-400 hover:text-red-600 p-2 transition-colors"
-                    title="মুছে ফেলুন"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-1.806c0-1.146-.908-2.112-2.055-2.144-.442-.012-.89-.012-1.335 0-1.147.032-2.055 1.03-2.055 2.144v1.806M15.75 9h-7.5" />
-                    </svg>
-                  </button>
-                )}
-              </div>
+    <div className="bg-[#fcfcfc] py-20 overflow-hidden font-sans relative">
+      
+      {/* ব্যাকগ্রাউন্ড ডেকোরেশন */}
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden opacity-20">
+         <div className="absolute top-10 left-[10%] text-7xl animate-pulse">📢</div>
+         <div className="absolute bottom-10 right-[10%] text-7xl animate-bounce">🧪</div>
+      </div>
 
-              <p className="text-lg font-bold text-gray-800 whitespace-pre-wrap leading-relaxed mb-6">
-                {n.content}
-              </p>
+      <div className="max-w-7xl mx-auto px-6 mb-10 relative z-10">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-green-100 rounded-full text-green-700 font-black text-[10px] uppercase tracking-[0.3em] mb-4 shadow-sm">
+           <span className="w-2 h-2 bg-green-500 rounded-full animate-ping"></span>
+           Latest Updates
+        </div>
+        <h2 className="text-4xl lg:text-6xl font-black text-slate-900 tracking-tighter">
+          নোটিশ <span className="text-green-500">বোর্ড</span>
+        </h2>
+      </div>
 
-              {/* পিডিএফ ডাউনলোড বাটন */}
-              {n.pdfUrl && (
-                <a 
-                  href={n.pdfUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-2xl text-sm font-black hover:bg-green-600 transition-all"
+      {/* 🏃‍♂️ Moving Notice Bar */}
+      <div className="relative py-10 bg-slate-900 shadow-[0_30px_60px_rgba(0,0,0,0.1)] group cursor-pointer">
+        {/* Glossy Fade Edges */}
+        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-slate-900 to-transparent z-10" />
+        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-slate-900 to-transparent z-10" />
+
+        <div className="flex whitespace-nowrap overflow-hidden">
+          <div className="flex animate-marquee group-hover:[animation-play-state:paused] items-center">
+            {notices.length > 0 ? (
+              [...notices, ...notices].map((n, index) => (
+                <div 
+                  key={index} 
+                  onClick={() => setSelectedNotice(n)}
+                  className="flex items-center px-12 group/item transition-all"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                  </svg>
-                  ডাউনলোড পিডিএফ
-                </a>
-              )}
-            </div>
-          ))}
+                  <span className="text-3xl mr-6 transform group-hover/item:scale-125 transition-transform" style={{ filter: 'drop-shadow(0 0 10px #22c55e)' }}>🔔</span>
+                  <span className="text-white text-xl lg:text-2xl font-bold tracking-wide group-hover/item:text-green-400 transition-colors">
+                    <span className="text-green-500 mr-4 font-black">[{n.dateString}]</span>
+                    {n.content.substring(0, 80)}{n.content.length > 80 ? "..." : ""}
+                    <span className="ml-4 text-[10px] bg-green-500 text-white px-3 py-1 rounded-full uppercase tracking-tighter">Click to View</span>
+                  </span>
+                  <span className="mx-16 text-slate-700 text-5xl font-light opacity-30">•</span>
+                </div>
+              ))
+            ) : (
+              <span className="text-slate-500 font-bold px-10 text-2xl tracking-widest uppercase">কোনো নতুন নোটিশ নেই...</span>
+            )}
+          </div>
         </div>
       </div>
+
+      {/* 📝 Details Modal */}
+      <AnimatePresence>
+        {selectedNotice && (
+          <div className="fixed inset-0 z-[999] flex items-center justify-center p-6">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedNotice(null)}
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-xl"
+            />
+            
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="relative bg-white w-full max-w-2xl p-10 lg:p-14 rounded-[60px] shadow-[0_50px_100px_rgba(0,0,0,0.3)] border border-white"
+            >
+              <button 
+                onClick={() => setSelectedNotice(null)}
+                className="absolute top-10 right-10 w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center text-xl hover:bg-red-50 hover:text-red-500 transition-all"
+              >✕</button>
+
+              <div className="mb-8">
+                <span className="bg-green-100 text-green-700 px-5 py-2 rounded-2xl text-xs font-black uppercase tracking-widest">
+                  Published: {selectedNotice.dateString}
+                </span>
+              </div>
+
+              <h3 className="text-3xl font-black text-slate-900 mb-6 leading-tight border-l-8 border-green-500 pl-6">
+                নোটিশের বিস্তারিত
+              </h3>
+
+              <div className="bg-slate-50 p-8 rounded-[40px] mb-10 max-h-[400px] overflow-y-auto custom-scrollbar">
+                <p className="text-slate-700 font-bold text-lg leading-relaxed whitespace-pre-wrap">
+                  {selectedNotice.content}
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                {selectedNotice.pdfUrl && (
+                  <a 
+                    href={selectedNotice.pdfUrl} 
+                    target="_blank"
+                    className="flex-1 bg-slate-900 text-white py-5 rounded-[25px] font-black text-center hover:bg-green-600 transition-all shadow-xl"
+                  >
+                    📄 PDF ফাইল ডাউনলোড
+                  </a>
+                )}
+                <button 
+                  onClick={() => setSelectedNotice(null)}
+                  className="flex-1 bg-green-100 text-green-700 py-5 rounded-[25px] font-black hover:bg-green-200 transition-all"
+                >
+                  বন্ধ করুন
+                </button>
+              </div>
+
+              {isAdmin && (
+                <button 
+                  onClick={async () => {
+                    if(confirm("মুছে ফেলবেন?")) {
+                      await deleteDoc(doc(db, "notices", selectedNotice.id));
+                      setSelectedNotice(null);
+                    }
+                  }}
+                  className="mt-6 text-red-400 font-black text-xs uppercase tracking-widest hover:text-red-600 w-full text-center"
+                >
+                  Delete This Notice (Admin Only)
+                </button>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Tailwind Custom Styles (Inline Tip) */}
+      <style jsx>{`
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+      `}</style>
     </div>
   );
 }
