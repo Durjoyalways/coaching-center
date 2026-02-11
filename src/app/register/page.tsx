@@ -2,15 +2,15 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { auth, db } from "@/lib/firebase"; // আপনার তৈরি করা firebase.js ফাইল
+import { auth, db } from "@/lib/firebase"; 
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 const RegisterPage = () => {
   const router = useRouter();
   
-  // ফর্ম ডাটা স্টেট
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,7 +20,6 @@ const RegisterPage = () => {
 
   const [loading, setLoading] = useState(false);
 
-  // ইনপুট হ্যান্ডলার
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -28,13 +27,11 @@ const RegisterPage = () => {
     });
   };
 
-  // সাবমিট লজিক
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      // ১. Firebase Auth দিয়ে ইউজার তৈরি
       const userCredential = await createUserWithEmailAndPassword(
         auth, 
         formData.email, 
@@ -42,18 +39,17 @@ const RegisterPage = () => {
       );
       const user = userCredential.user;
 
-      // ২. Firestore-এ ইউজারের এক্সট্রা তথ্য (Role সহ) সেভ করা
       await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
-        role: "user", // ডিফল্টভাবে সবাই সাধারণ ইউজার হবে
+        role: "user", 
         createdAt: new Date().toISOString(),
       });
 
-      alert("অভিনন্দন! আপনার একাউন্ট তৈরি হয়েছে।");
-      router.push("/login"); // লগইন পেজে পাঠিয়ে দিবে
+      alert("অভিনন্দন! আপনার একাউন্ট তৈরি হয়েছে।");
+      router.push("/login"); 
 
     } catch (error: any) {
       console.error(error);
@@ -64,75 +60,89 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="bg-[#f4fcf0] min-h-screen flex items-center justify-center p-6 font-sans relative overflow-hidden">
+    <div className="bg-white min-h-screen flex items-center justify-center p-6 font-sans relative overflow-hidden">
       
-      {/* --- ডেকোরেটিভ ব্যাকগ্রাউন্ড এলিমেন্টস --- */}
-      <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-green-200 rounded-full blur-[120px] opacity-60"></div>
-      <div className="absolute bottom-[-10%] right-[-10%] w-[400px] h-[400px] bg-yellow-100 rounded-full blur-[100px] opacity-50"></div>
+      {/* 📚 Background Educational Floating Icons */}
+      <div className="absolute inset-0 z-0 pointer-events-none select-none opacity-[0.15]">
+        <motion.div animate={{ y: [0, -20, 0], rotate: [0, 10, 0] }} transition={{ duration: 6, repeat: Infinity }} className="absolute top-10 right-[10%] text-7xl">🎓</motion.div>
+        <motion.div animate={{ y: [0, 25, 0], rotate: [0, -15, 0] }} transition={{ duration: 8, repeat: Infinity }} className="absolute top-1/2 left-[5%] text-6xl">🔬</motion.div>
+        <motion.div animate={{ scale: [1, 1.15, 1] }} transition={{ duration: 5, repeat: Infinity }} className="absolute bottom-10 right-[15%] text-8xl">⚛️</motion.div>
+        <motion.div animate={{ x: [-20, 20, -20] }} transition={{ duration: 7, repeat: Infinity }} className="absolute top-1/4 left-[20%] text-7xl">🧪</motion.div>
+        <div className="absolute bottom-1/4 left-10 text-5xl">📖</div>
+        <div className="absolute top-1/3 right-1/4 text-5xl">🧠</div>
+      </div>
 
-      {/* --- রেজিস্ট্রেশন কার্ড (Glassmorphism) --- */}
-      <div className="w-full max-w-xl bg-white/40 backdrop-blur-3xl rounded-[60px] p-8 lg:p-12 border border-white/60 shadow-[0_40px_100px_rgba(22,101,52,0.08)] relative z-10 my-10 transition-all">
-        
-        <div className="text-center mb-8">
-          <div className="inline-block p-4 bg-green-600 rounded-[22px] text-white shadow-xl mb-6">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-8 h-8">
+      {/* 🟢 Glowing Background Blob */}
+      <div className="absolute w-[600px] h-[600px] bg-green-200/20 rounded-full blur-[130px] z-0"></div>
+
+      {/* 💎 Glowing Register Card */}
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-2xl bg-white rounded-[55px] p-8 lg:p-14 border border-green-50 shadow-[0_25px_70px_rgba(34,197,94,0.1)] relative z-10 hover:shadow-[0_25px_90px_rgba(34,197,94,0.18)] transition-all duration-500 my-10"
+      >
+        {/* Neon Glow Line */}
+        <div className="absolute top-0 left-1/4 right-1/4 h-1 bg-gradient-to-r from-transparent via-green-400 to-transparent shadow-[0_0_15px_#4ade80]"></div>
+
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-green-500 rounded-3xl text-white shadow-[0_10px_30px_rgba(34,197,94,0.3)] mb-6 transform hover:scale-110 transition-transform">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-10 h-10">
               <path strokeLinecap="round" strokeLinejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM3 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 018.625 21c-2.331 0-4.512-.645-6.374-1.766z" />
             </svg>
           </div>
-          <h1 className="text-4xl font-black text-slate-900 mb-2">রেজিস্ট্রেশন</h1>
-          <p className="text-green-800/70 font-bold text-xs uppercase tracking-[0.2em]">নতুন মেম্বারশিপের জন্য তথ্য দিন</p>
+          <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight">রেজিস্ট্রেশন</h1>
+          <p className="text-green-600 font-black text-[10px] uppercase tracking-[0.4em]">শিক্ষার আলোয় আপনাকে স্বাগতম</p>
         </div>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          
           {/* নাম */}
-          <div className="md:col-span-2">
-            <label className="block text-slate-800 font-black text-[10px] uppercase tracking-[0.2em] mb-2 ml-2">Full Name</label>
+          <div className="md:col-span-2 group">
+            <label className="block text-slate-400 font-black text-[10px] uppercase tracking-[0.2em] mb-2 ml-4 group-focus-within:text-green-500 transition-colors">Full Name</label>
             <input 
               name="name"
               type="text" 
               placeholder="আপনার পূর্ণ নাম"
               onChange={handleChange}
-              className="w-full px-7 py-4 rounded-3xl bg-white/80 border border-green-100 focus:border-green-500 focus:bg-white outline-none transition-all font-bold text-slate-700 shadow-sm"
+              className="w-full px-7 py-4 rounded-[22px] bg-slate-50 border border-transparent focus:border-green-400 focus:bg-white outline-none transition-all font-bold text-slate-700 shadow-inner"
               required
             />
           </div>
 
-          {/* ইমেইল বা আইডি */}
-          <div className="md:col-span-1">
-            <label className="block text-slate-800 font-black text-[10px] uppercase tracking-[0.2em] mb-2 ml-2">Email</label>
+          {/* ইমেইল */}
+          <div className="group">
+            <label className="block text-slate-400 font-black text-[10px] uppercase tracking-[0.2em] mb-2 ml-4 group-focus-within:text-green-500 transition-colors">Email</label>
             <input 
               name="email"
               type="email" 
-              placeholder="Email"
+              placeholder="ইমেইল দিন"
               onChange={handleChange}
-              className="w-full px-7 py-4 rounded-3xl bg-white/80 border border-green-100 focus:border-green-500 focus:bg-white outline-none transition-all font-bold text-slate-700 shadow-sm"
+              className="w-full px-7 py-4 rounded-[22px] bg-slate-50 border border-transparent focus:border-green-400 focus:bg-white outline-none transition-all font-bold text-slate-700 shadow-inner"
               required
             />
           </div>
 
-          {/* ফোন নম্বর */}
-          <div className="md:col-span-1">
-            <label className="block text-slate-800 font-black text-[10px] uppercase tracking-[0.2em] mb-2 ml-2">Phone</label>
+          {/* ফোন */}
+          <div className="group">
+            <label className="block text-slate-400 font-black text-[10px] uppercase tracking-[0.2em] mb-2 ml-4 group-focus-within:text-green-500 transition-colors">Phone</label>
             <input 
               name="phone"
               type="tel" 
               placeholder="01XXXXXXXXX"
               onChange={handleChange}
-              className="w-full px-7 py-4 rounded-3xl bg-white/80 border border-green-100 focus:border-green-500 focus:bg-white outline-none transition-all font-bold text-slate-700 shadow-sm"
+              className="w-full px-7 py-4 rounded-[22px] bg-slate-50 border border-transparent focus:border-green-400 focus:bg-white outline-none transition-all font-bold text-slate-700 shadow-inner"
               required
             />
           </div>
 
           {/* পাসওয়ার্ড */}
-          <div className="md:col-span-2">
-            <label className="block text-slate-800 font-black text-[10px] uppercase tracking-[0.2em] mb-2 ml-2">Set Password</label>
+          <div className="md:col-span-2 group">
+            <label className="block text-slate-400 font-black text-[10px] uppercase tracking-[0.2em] mb-2 ml-4 group-focus-within:text-green-500 transition-colors">Set Password</label>
             <input 
               name="password"
               type="password" 
               placeholder="••••••••"
               onChange={handleChange}
-              className="w-full px-7 py-4 rounded-3xl bg-white/80 border border-green-100 focus:border-green-500 focus:bg-white outline-none transition-all font-bold text-slate-700 shadow-sm"
+              className="w-full px-7 py-4 rounded-[22px] bg-slate-50 border border-transparent focus:border-green-400 focus:bg-white outline-none transition-all font-bold text-slate-700 shadow-inner"
               required
             />
           </div>
@@ -142,26 +152,32 @@ const RegisterPage = () => {
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full bg-green-600 text-white py-5 rounded-[28px] font-black text-lg shadow-xl shadow-green-900/10 hover:bg-[#fffdf5] hover:text-green-700 hover:border-2 hover:border-yellow-200 transition-all duration-500 transform active:scale-95 disabled:opacity-50"
+              className="w-full relative group overflow-hidden bg-slate-900 text-white py-5 rounded-[25px] font-black text-lg transition-all duration-500 shadow-xl active:scale-95 disabled:opacity-50"
             >
-              {loading ? "অপেক্ষা করুন..." : "একাউন্ট তৈরি করুন"}
+              <div className="absolute inset-0 bg-green-500 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                {loading ? "অপেক্ষা করুন..." : "একাউন্ট তৈরি করুন"}
+                {!loading && <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-5 h-5 group-hover:translate-x-1 transition-transform">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                </svg>}
+              </span>
             </button>
           </div>
         </form>
 
-        <div className="mt-10 text-center border-t border-green-100/30 pt-8">
-          <p className="text-slate-500 font-bold text-sm">
+        <div className="mt-10 text-center border-t border-slate-50 pt-8">
+          <p className="text-slate-400 font-bold text-sm">
             ইতিমধ্যেই একাউন্ট আছে? {" "}
-            <Link href="/login" className="text-green-700 font-black hover:underline tracking-tight">
+            <Link href="/login" className="text-green-600 font-black hover:text-green-700 transition-colors">
               লগইন করুন →
             </Link>
           </p>
         </div>
-      </div>
+      </motion.div>
 
-      <div className="absolute bottom-8 left-0 w-full text-center opacity-10 pointer-events-none">
-        <span className="text-green-900 font-black text-[10vw] leading-none select-none uppercase">Join Us</span>
-      </div>
+      {/* Decorative Dots */}
+      <div className="absolute top-1/3 left-1/4 w-3 h-3 bg-green-400 rounded-full animate-pulse blur-sm"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
     </div>
   );
 };
