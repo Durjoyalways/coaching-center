@@ -12,6 +12,7 @@ export default function Navbar() {
   const [user, setUser] = useState<any>(null);
   const [userData, setUserData] = useState<any>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isAdminSubMenuOpen, setIsAdminSubMenuOpen] = useState(false); // অ্যাডমিন সাব-মেনুর জন্য
   
   const dropdownRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
@@ -32,8 +33,13 @@ export default function Navbar() {
     });
 
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) setIsDropdownOpen(false);
-      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) setIsMenuOpen(false);
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+        setIsAdminSubMenuOpen(false); // বাইরে ক্লিক করলে অ্যাডমিন মেনুও বন্ধ হবে
+      }
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
 
@@ -94,21 +100,44 @@ export default function Navbar() {
                 </svg>
               </button>
 
-              {/* 🖥️ ডেস্কটপ প্রোফাইল ড্রপডাউন (Blur Style) */}
-              <div className={`absolute right-0 top-full mt-4 w-60 bg-white/80 backdrop-blur-xl rounded-[30px] shadow-2xl border border-white/50 py-6 transition-all duration-300 origin-top-right ${isDropdownOpen ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none"}`}>
-                <div className="px-6 pb-4 border-b border-gray-200/30 mb-2">
+              {/* 🖥️ ডেস্কটপ প্রোফাইল ড্রপডাউন */}
+              <div className={`absolute right-0 top-full mt-4 w-64 bg-white/90 backdrop-blur-xl rounded-[30px] shadow-2xl border border-white/50 py-4 transition-all duration-300 origin-top-right ${isDropdownOpen ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none"}`}>
+                
+                <div className="px-6 py-3 border-b border-gray-100 mb-2 text-center md:text-left">
                    <p className="text-[10px] font-black text-green-600 uppercase tracking-[0.2em]">{userData?.role || "Student"}</p>
                    <p className="text-xs font-bold text-gray-400 truncate">{user.email}</p>
                 </div>
-                <Link href="/profile" className="block px-6 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 font-bold transition-colors">আমার প্রোফাইল</Link>
+
+                {/* --- ⚙️ ড্রপডাউন যুক্ত অ্যাডমিন প্যানেল --- */}
                 {userData?.role === "admin" && (
-                  <Link href="/add-notice" className="block px-6 py-3 text-sm text-blue-600 hover:bg-blue-50 font-black transition-colors">
-                    + নোটিশ যুক্ত করুন
-                  </Link>
+                  <div className="mb-1">
+                    <button 
+                      onClick={() => setIsAdminSubMenuOpen(!isAdminSubMenuOpen)}
+                      className={`w-full flex items-center justify-between px-6 py-3 text-sm font-black transition-all ${isAdminSubMenuOpen ? 'bg-green-600 text-white' : 'text-green-700 hover:bg-green-50'}`}
+                    >
+                      <span>⚙️ অ্যাডমিন মেনু</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className={`w-3 h-3 transition-transform ${isAdminSubMenuOpen ? 'rotate-0' : '-rotate-90'}`}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                      </svg>
+                    </button>
+                    
+                    {/* অ্যাডমিন সাব-লিংকসমূহ */}
+                    <div className={`overflow-hidden transition-all duration-300 bg-green-50/50 ${isAdminSubMenuOpen ? 'max-h-40 py-2' : 'max-h-0'}`}>
+                      <Link href="/admin" onClick={() => setIsDropdownOpen(false)} className="block px-10 py-2 text-xs font-bold text-green-600 hover:text-green-800">
+                         📊 ড্যাশবোর্ড দেখুন
+                      </Link>
+                      <Link href="/add-notice" onClick={() => setIsDropdownOpen(false)} className="block px-10 py-2 text-xs font-bold text-green-600 hover:text-green-800">
+                         + নোটিশ যুক্ত করুন
+                      </Link>
+                    </div>
+                  </div>
                 )}
-                <div className="px-4 mt-2">
-                  <button onClick={handleLogout} className="w-full bg-red-50 text-red-600 py-3 rounded-2xl font-black text-sm hover:bg-red-600 hover:text-white transition-all border border-red-100">
-                    লগআউট করুন
+
+                <Link href="/profile" onClick={() => setIsDropdownOpen(false)} className="block px-6 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-700 font-bold transition-colors">👤 আমার প্রোফাইল</Link>
+                
+                <div className="px-4 mt-3">
+                  <button onClick={handleLogout} className="w-full bg-red-50 text-red-500 py-3 rounded-2xl font-black text-sm hover:bg-red-500 hover:text-white transition-all border border-red-100 flex items-center justify-center gap-2">
+                    লগআউট
                   </button>
                 </div>
               </div>
@@ -116,7 +145,7 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* মোবাইল বাটন ও আইকন */}
+        {/* মোবাইল বাটন */}
         <div className="md:hidden flex items-center gap-3">
           {user && (
             <div className="w-9 h-9 bg-green-600 rounded-full flex items-center justify-center text-white font-black text-sm shadow-md border-2 border-white">
@@ -132,19 +161,34 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* 📱 মোবাইল মেনু ড্রপডাউন (Blur Style) */}
+        {/* 📱 মোবাইল মেনু */}
         <div 
           ref={mobileMenuRef}
-          className={`absolute top-full right-5 mt-2 w-64 bg-white/80 backdrop-blur-xl rounded-[30px] shadow-2xl border border-white/50 py-8 transition-all duration-300 md:hidden z-[110] origin-top-right ${isMenuOpen ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none"}`}
+          className={`absolute top-full right-5 mt-2 w-72 bg-white/95 backdrop-blur-xl rounded-[30px] shadow-2xl border border-white/50 py-8 transition-all duration-300 md:hidden z-[110] origin-top-right ${isMenuOpen ? "scale-100 opacity-100" : "scale-95 opacity-0 pointer-events-none"}`}
         >
-          <ul className="flex flex-col gap-5 px-8 font-black text-gray-700">
+          <ul className="flex flex-col gap-4 px-8 font-black text-gray-700">
             {navLinks.map((link) => (
               <li key={link.href}><Link href={link.href} onClick={() => setIsMenuOpen(false)} className="hover:text-green-600 block text-lg">{link.label}</Link></li>
             ))}
+            
             <div className="h-[1px] bg-gray-200/50 my-2"></div>
+
             {user ? ( 
               <>
-                {userData?.role === "admin" && <li><Link href="/add-notice" onClick={() => setIsMenuOpen(false)} className="text-blue-600 text-lg">+ নোটিশ যুক্ত করুন</Link></li>}
+                {/* মোবাইল অ্যাডমিন সাব-মেনু */}
+                {userData?.role === "admin" && (
+                  <div className="flex flex-col gap-3 mb-2">
+                    <p className="text-[10px] text-green-600 tracking-widest uppercase">অ্যাডমিন কন্ট্রোল</p>
+                    <Link href="/admin" onClick={() => setIsMenuOpen(false)} className="text-gray-800 text-lg flex items-center gap-2 pl-2">
+                      📊 ড্যাশবোর্ড
+                    </Link>
+                    <Link href="/add-notice" onClick={() => setIsMenuOpen(false)} className="text-gray-800 text-lg flex items-center gap-2 pl-2">
+                      📝 নোটিশ পোস্ট
+                    </Link>
+                  </div>
+                )}
+                
+                <li><Link href="/profile" onClick={() => setIsMenuOpen(false)} className="text-gray-700 text-lg block">👤 প্রোফাইল</Link></li>
                 <li>
                   <button onClick={handleLogout} className="w-full bg-red-50 text-red-600 py-4 rounded-2xl font-black text-lg border border-red-100">লগআউট</button>
                 </li>
