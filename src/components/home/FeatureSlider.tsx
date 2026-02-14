@@ -1,11 +1,12 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion"; // Framer Motion ইম্পোর্ট করা হয়েছে
 
 const FeatureSlider: React.FC = () => {
   const items = [
     { name: "গণিত", icon: "📐", border: "border-green-500" },
-    { name: "পদার্থবিজ্ঞান", icon: "⚛️", border: "border-yellow-500" }, // Gold color
+    { name: "পদার্থবিজ্ঞান", icon: "⚛️", border: "border-yellow-500" },
     { name: "রসায়ন", icon: "🧪", border: "border-green-500" },
     { name: "ইংরেজি স্পোকেন", icon: "🗣️", border: "border-yellow-500" },
     { name: "জীববিজ্ঞান", icon: "🧬", border: "border-green-500" },
@@ -27,26 +28,41 @@ const FeatureSlider: React.FC = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 mb-8 lg:mb-14 text-center relative z-10">
-        {/* মডার্ন পালসিং ব্যাজ */}
-        <div className="inline-flex items-center gap-2.5 px-4 lg:px-5 py-1.5 lg:py-2 rounded-full bg-white border border-slate-100 mb-4 lg:mb-6 shadow-sm">
-            <span className="flex h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse"></span>
-            <h3 className="text-slate-500 font-black uppercase tracking-[0.2em] lg:tracking-[0.3em] text-[9px] lg:text-xs">
-              আমাদের বিশেষত্ব ও সেবাসমূহ
-            </h3>
-        </div>
-        <h2 className="text-2xl md:text-5xl font-black text-slate-900 tracking-tight">
-          সবকিছু <span className="text-green-500">এক জায়গায়</span>
-        </h2>
+        
+        {/* হেডার এনিমেশন - প্রতিবার স্ক্রল করলে আসবে */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.3 }}
+          transition={{ duration: 0.7 }}
+        >
+          {/* মডার্ন পালসিং ব্যাজ */}
+          <div className="inline-flex items-center gap-2.5 px-4 lg:px-5 py-1.5 lg:py-2 rounded-full bg-white border border-slate-100 mb-4 lg:mb-6 shadow-sm">
+              <span className="flex h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse"></span>
+              <h3 className="text-slate-500 font-black uppercase tracking-[0.2em] lg:tracking-[0.3em] text-[9px] lg:text-xs">
+                আমাদের বিশেষত্ব ও সেবাসমূহ
+              </h3>
+          </div>
+          <h2 className="text-2xl md:text-5xl font-black text-slate-900 tracking-tight">
+            সবকিছু <span className="text-green-500">এক জায়গায়</span>
+          </h2>
+        </motion.div>
       </div>
 
-      {/* স্লাইডার কন্টেইনার */}
-      <div className="relative flex items-center group">
+      {/* স্লাইডার কন্টেইনার এনিমেশন */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: false, amount: 0.2 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="relative flex items-center group"
+      >
         
         {/* দুই পাশে প্রফেশনাল ফেড ইফেক্ট (Glass Mask) */}
         <div className="absolute left-0 w-16 md:w-64 h-full bg-gradient-to-r from-[#fcfcfc] via-[#fcfcfc]/80 to-transparent z-20 pointer-events-none" />
         <div className="absolute right-0 w-16 md:w-64 h-full bg-gradient-to-l from-[#fcfcfc] via-[#fcfcfc]/80 to-transparent z-20 pointer-events-none" />
 
-        {/* এনিমেটেড স্লাইডার */}
+        {/* এনিমেটেড স্লাইডার (Marquee) */}
         <div className="flex animate-marquee whitespace-nowrap hover:[animation-play-state:paused] py-4 lg:py-8 z-10">
           {[...items, ...items].map((item, index) => (
             <div
@@ -67,7 +83,7 @@ const FeatureSlider: React.FC = () => {
             </div>
           ))}
         </div>
-      </div>
+      </motion.div>
 
       {/* স্লাইডারটির নিচে একটি হালকা শেড */}
       <div className="max-w-4xl mx-auto h-[1px] bg-gradient-to-r from-transparent via-slate-100 to-transparent mt-8 lg:mt-12 opacity-50"></div>

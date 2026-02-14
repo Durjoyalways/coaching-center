@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion"; // Framer Motion ইম্পোর্ট করা হয়েছে
 
 const Statistics: React.FC = () => {
   const stats = [
@@ -12,7 +13,7 @@ const Statistics: React.FC = () => {
         icon: "🎓",
         glow: "shadow-[0_0_30px_rgba(34,197,94,0.3)]",
         bgLight: "bg-green-50",
-        borderColor: "border-green-200", // বর্ডার সবসময় থাকবে
+        borderColor: "border-green-200", 
         hoverGlow: "group-hover:border-green-500 group-hover:shadow-[0_0_25px_rgba(34,197,94,0.3)]"
     },
     { 
@@ -23,7 +24,7 @@ const Statistics: React.FC = () => {
         icon: "👨‍🏫",
         glow: "shadow-[0_0_30px_rgba(234,179,8,0.3)]",
         bgLight: "bg-yellow-50",
-        borderColor: "border-yellow-200", // বর্ডার সবসময় থাকবে
+        borderColor: "border-yellow-200", 
         hoverGlow: "group-hover:border-yellow-500 group-hover:shadow-[0_0_25px_rgba(234,179,8,0.3)]"
     },
     { 
@@ -34,7 +35,7 @@ const Statistics: React.FC = () => {
         icon: "📈",
         glow: "shadow-[0_0_30px_rgba(20,184,166,0.3)]",
         bgLight: "bg-emerald-50",
-        borderColor: "border-emerald-200", // বর্ডার সবসময় থাকবে
+        borderColor: "border-emerald-200", 
         hoverGlow: "group-hover:border-emerald-500 group-hover:shadow-[0_0_25px_rgba(20,184,166,0.3)]"
     },
     { 
@@ -45,7 +46,7 @@ const Statistics: React.FC = () => {
         icon: "🏆",
         glow: "shadow-[0_0_30px_rgba(249,115,22,0.3)]",
         bgLight: "bg-orange-50",
-        borderColor: "border-orange-200", // বর্ডার সবসময় থাকবে
+        borderColor: "border-orange-200", 
         hoverGlow: "group-hover:border-orange-500 group-hover:shadow-[0_0_25px_rgba(249,115,22,0.3)]"
     },
   ];
@@ -62,7 +63,18 @@ const Statistics: React.FC = () => {
       <div className="max-w-7xl mx-auto px-10 md:px-6 relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-10">
           {stats.map((stat, index) => (
-            <div key={index} className="relative group">
+            <motion.div 
+              key={index} 
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.3 }} // যতবার স্ক্রল করবে ততবার এনিমেশন হবে
+              transition={{ 
+                duration: 0.6, 
+                delay: index * 0.1, // একেকটি কার্ড একটু পর পর আসবে
+                ease: "easeOut" 
+              }}
+              className="relative group"
+            >
               
               {/* Outer Glow Background */}
               <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-0 group-hover:opacity-5 blur-2xl transition-opacity duration-700 rounded-[30px] lg:rounded-[40px]`} />
@@ -87,10 +99,11 @@ const Statistics: React.FC = () => {
                     <p className="text-slate-500 font-bold text-[10px] lg:text-sm uppercase tracking-[0.2em]">
                       {stat.label}
                     </p>
+                    {/* এনিমেটেড আন্ডারলাইন হোভারে বড় হবে */}
                     <div className={`w-6 lg:w-8 h-1 lg:h-1.5 bg-gradient-to-r ${stat.color} opacity-30 mt-2 group-hover:w-16 transition-all duration-500 rounded-full`} />
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

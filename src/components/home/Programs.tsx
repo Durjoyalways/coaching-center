@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion"; // Framer Motion ইম্পোর্ট করা হয়েছে
 
 const Programs: React.FC = () => {
   const whatsappNumber = "8801700000000"; // আপনার নম্বরটি এখানে দিন
@@ -58,8 +59,14 @@ const Programs: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-10 md:px-6 relative z-10">
         
-        {/* সেকশন হেডার */}
-        <div className="text-center mb-10 lg:mb-20">
+        {/* সেকশন হেডার অ্যানিমেশন */}
+        <motion.div 
+          initial={{ opacity: 0, y: -40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.3 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-10 lg:mb-20"
+        >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-green-50 border border-green-100 rounded-full text-green-700 font-bold text-[9px] lg:text-[10px] uppercase tracking-[0.2em] mb-4 shadow-sm">
              <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
              একাডেমিক প্রোগ্রামসমূহ
@@ -67,18 +74,29 @@ const Programs: React.FC = () => {
           <h2 className="text-3xl lg:text-6xl font-black text-slate-900 leading-tight">
             সেরা প্রস্তুতির জন্য <br /> <span className="text-green-500">সঠিক কোর্স</span> বেছে নিন
           </h2>
-        </div>
+        </motion.div>
 
-        {/* কার্ড গ্রিড */}
+        {/* কার্ড গ্রিড অ্যানিমেশন */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10">
           {academicPrograms.map((program, index) => (
-            <div key={index} className="relative group">
+            <motion.div 
+              key={index} 
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: false, amount: 0.2 }} // ২০% স্ক্রিনে আসলেই এনিমেশন হবে
+              transition={{ 
+                duration: 0.7, 
+                delay: index * 0.15, // একটির পর একটি কার্ড স্লাইড হয়ে আসবে
+                ease: "easeOut"
+              }}
+              className="relative group"
+            >
               
               {/* Outer Glow Background on Hover */}
               <div className={`absolute inset-0 bg-gradient-to-br ${program.accent} opacity-0 group-hover:opacity-5 blur-2xl transition-opacity duration-700 rounded-[35px] lg:rounded-[50px]`} />
 
-              {/* Main Card with Permanent Border and Hover Glow */}
-              <div className={`relative h-full bg-white/80 backdrop-blur-md border-2 ${program.borderColor} ${program.hoverBorder} p-8 lg:p-10 rounded-[35px] lg:rounded-[50px] shadow-[0_15px_40px_rgba(0,0,0,0.02)] flex flex-col items-center text-center lg:items-start lg:text-left hover:-translate-y-2 group-hover:shadow-[0_20px_50px_${program.glowColor}] transition-all duration-500`}>
+              {/* Main Card */}
+              <div className={`relative h-full bg-white/80 backdrop-blur-md border-2 ${program.borderColor} ${program.hoverBorder} p-8 lg:p-10 rounded-[35px] lg:rounded-[50px] shadow-[0_15px_40px_rgba(0,0,0,0.02)] flex flex-col items-center text-center lg:items-start lg:text-left hover:-translate-y-2 transition-all duration-500`}>
                 
                 {/* আইকন হোল্ডার */}
                 <div className={`w-14 h-14 lg:w-16 lg:h-16 rounded-2xl ${program.bg} flex items-center justify-center text-2xl lg:text-3xl mb-6 shadow-inner transform group-hover:rotate-6 transition-all duration-500`}
@@ -121,7 +139,7 @@ const Programs: React.FC = () => {
                   </svg>
                 </a>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

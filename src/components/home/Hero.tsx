@@ -3,12 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { motion } from "framer-motion"; // Framer Motion ইম্পোর্ট করা হয়েছে
 
 const Hero: React.FC = () => {
   return (
     <section className="relative w-full bg-[#fcfcfc] overflow-hidden py-10 lg:py-24 px-4 md:px-12 min-h-[auto] lg:min-h-screen flex items-center">
       
-      {/* 🌌 কালারফুল এডুকেশনাল এলিমেন্টস */}
+      {/* 🌌 কালারফুল এডুকেশনাল এলিমেন্টস (Floating Background) */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
         <div className="absolute top-[5%] left-[5%] text-5xl md:text-9xl opacity-20 animate-bounce">🧪</div>
         <div className="hidden md:block absolute bottom-[15%] right-[10%] text-9xl opacity-20 animate-pulse">⚗️</div>
@@ -21,8 +22,14 @@ const Hero: React.FC = () => {
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
         
-        {/* কন্টেন্ট অংশ */}
-        <div className="lg:col-span-5 text-center lg:text-left order-2 lg:order-1 mt-8 lg:mt-0">
+        {/* কন্টেন্ট অংশ - প্রতিবার স্ক্রল করলে বাম দিক থেকে আসবে */}
+        <motion.div 
+          initial={{ opacity: 0, x: -70 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: false, amount: 0.3 }} // once: false মানে প্রতিবার স্ক্রল করলে কাজ করবে
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="lg:col-span-5 text-center lg:text-left order-2 lg:order-1 mt-8 lg:mt-0"
+        >
           <div className="inline-flex items-center gap-2 px-5 py-2 bg-green-50 rounded-full text-green-600 font-bold mb-6 border border-green-200/50 shadow-sm">
             <span className="text-sm">★</span>
             <span className="tracking-widest text-[10px] md:text-[12px] uppercase">আধুনিক শিক্ষা ব্যবস্থা</span>
@@ -41,10 +48,16 @@ const Hero: React.FC = () => {
               কোর্স শুরু করুন ↗
             </Link>
           </div>
-        </div>
+        </motion.div>
 
-        {/* ইমেজ অংশ */}
-        <div className="lg:col-span-7 order-1 lg:order-2 relative h-[350px] sm:h-[450px] md:h-[600px] lg:h-[700px] w-full">
+        {/* ইমেজ অংশ - প্রতিবার স্ক্রল করলে নিচ থেকে ফেড ইন হবে */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.85, y: 60 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.3 }} // যতবার স্ক্রিনে আসবে ততবার এনিমেটেড হবে
+          transition={{ duration: 1, ease: "easeOut", delay: 0.1 }}
+          className="lg:col-span-7 order-1 lg:order-2 relative h-[350px] sm:h-[450px] md:h-[600px] lg:h-[700px] w-full"
+        >
           <div className="relative w-full h-full">
             
             {/* Woman Card (Right Side) */}
@@ -64,7 +77,7 @@ const Hero: React.FC = () => {
             </div>
 
           </div>
-        </div>
+        </motion.div>
         
       </div>
 

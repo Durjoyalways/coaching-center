@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { motion } from "framer-motion";
 
 const Contact: React.FC = () => {
   // আপনার হোয়াটসঅ্যাপ নম্বর (country code সহ)
@@ -19,13 +20,26 @@ const Contact: React.FC = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-10 md:px-6 relative z-10">
-        {/* মেইন কন্টেইনার কার্ড - বর্ডার যোগ করা হয়েছে */}
-        <div className="relative bg-white/70 backdrop-blur-xl border-2 border-green-100 rounded-[40px] lg:rounded-[80px] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.03)] hover:border-green-200 transition-colors duration-500">
+        
+        {/* মেইন কন্টেইনার কার্ড */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.8 }}
+          className="relative bg-white/70 backdrop-blur-xl border-2 border-green-100 rounded-[40px] lg:rounded-[80px] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.03)] hover:border-green-200 transition-colors duration-500"
+        >
           
           <div className="flex flex-col lg:flex-row items-stretch">
             
             {/* বাম পাশ: কন্টেন্ট */}
-            <div className="lg:w-1/2 p-8 lg:p-20 flex flex-col justify-center text-center lg:text-left">
+            <motion.div 
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="lg:w-1/2 p-8 lg:p-20 flex flex-col justify-center text-center lg:text-left"
+            >
               <div className="inline-flex items-center self-center lg:self-start gap-2 px-4 py-1.5 bg-yellow-50 border border-yellow-100 rounded-full text-yellow-700 font-bold text-[9px] lg:text-[10px] uppercase tracking-[0.2em] mb-6 shadow-sm">
                   <span className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-pulse"></span>
                   সরাসরি যোগাযোগ
@@ -45,27 +59,35 @@ const Contact: React.FC = () => {
                     "সকাল ১০টা থেকে রাত ৮টা পর্যন্ত অনলাইন",
                     "ভর্তির নিয়মাবলী ও ফি সম্পর্কে জানুন"
                 ].map((text, i) => (
-                    <div key={i} className="flex items-center gap-4 group">
+                    <motion.div 
+                      key={i} 
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.4 + (i * 0.1) }}
+                      className="flex items-center gap-4 group"
+                    >
                         <div className="w-6 h-6 lg:w-8 lg:h-8 bg-green-50 text-green-600 rounded-lg lg:rounded-xl flex items-center justify-center text-xs lg:text-sm font-black shadow-sm group-hover:bg-green-500 group-hover:text-white transition-all duration-300 border border-green-100">
                             ✓
                         </div>
                         <p className="text-slate-700 font-extrabold text-xs lg:text-base">{text}</p>
-                    </div>
+                    </motion.div>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
             {/* ডান পাশ: WhatsApp কার্ড */}
-            <div className="lg:w-1/2 p-6 lg:p-12 flex items-center justify-center bg-gradient-to-br from-green-50/50 to-yellow-50/50 border-t lg:border-t-0 lg:border-l border-green-100">
+            <motion.div 
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="lg:w-1/2 p-6 lg:p-12 flex items-center justify-center bg-gradient-to-br from-green-50/50 to-yellow-50/50 border-t lg:border-t-0 lg:border-l border-green-100"
+            >
               <div className="relative group w-full max-w-sm">
-                
-                {/* কার্ডের পেছনের গ্লো */}
                 <div className="absolute inset-0 bg-green-400 opacity-0 group-hover:opacity-10 blur-3xl transition-opacity duration-700 rounded-[30px] lg:rounded-[50px]" />
                 
-                {/* হোয়াটসঅ্যাপ কার্ড - এখানে স্থায়ী বর্ডার কালার দেওয়া হয়েছে */}
                 <div className="relative bg-white/90 p-8 lg:p-12 rounded-[30px] lg:rounded-[50px] shadow-[0_15px_40px_rgba(0,0,0,0.04)] border-2 border-green-200 group-hover:border-green-500 text-center transition-all duration-500 group-hover:-translate-y-2">
                   
-                  {/* WhatsApp Icon */}
                   <div className="w-16 h-16 lg:w-20 lg:h-20 bg-[#25D366] rounded-2xl lg:rounded-[25px] flex items-center justify-center mx-auto mb-6 shadow-[0_10px_25px_rgba(37,211,102,0.3)] group-hover:rotate-12 transition-transform duration-500">
                     <svg className="w-8 h-8 lg:w-10 lg:h-10" fill="white" viewBox="0 0 24 24">
                       <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.588-5.946 0-6.556 5.332-11.891 11.891-11.891 3.181 0 6.167 1.24 8.413 3.488 2.246 2.248 3.484 5.232 3.484 8.402 0 6.556-5.332 11.891-11.891 11.891-2.01 0-3.987-.51-5.742-1.47l-6.334 1.689zm6.086-5.309l.345.204c1.447.86 3.123 1.314 4.858 1.314 4.817 0 8.735-3.918 8.735-8.735 0-2.333-.909-4.524-2.56-6.175-1.651-1.652-3.846-2.561-6.175-2.561-4.817 0-8.735 3.918-8.735 8.735 0 1.68.47 3.32 1.358 4.767l.223.364-.951 3.475 3.562-.951z" />
@@ -93,10 +115,10 @@ const Contact: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

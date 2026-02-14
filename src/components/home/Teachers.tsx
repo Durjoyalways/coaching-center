@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import React, { useState } from "react";
+import { motion } from "framer-motion"; // Framer Motion ইম্পোর্ট করা হয়েছে
 
 const Teachers: React.FC = () => {
   const allTeachers = [
@@ -75,7 +76,14 @@ const Teachers: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-10 md:px-6 relative z-10">
         
-        <div className="text-center mb-16 lg:mb-24">
+        {/* হেডার এনিমেশন - প্রতিবার স্ক্রল করলে কাজ করবে */}
+        <motion.div 
+          initial={{ opacity: 0, y: -30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16 lg:mb-24"
+        >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-green-50 border border-green-100 rounded-full text-green-700 font-bold text-[9px] lg:text-[10px] uppercase tracking-[0.2em] mb-4 shadow-sm">
              <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
              মেন্টর প্যানেল
@@ -83,14 +91,25 @@ const Teachers: React.FC = () => {
           <h2 className="text-3xl lg:text-6xl font-black text-slate-900 leading-tight">
             আমাদের দক্ষ <span className="text-green-500 underline decoration-green-200 decoration-4 md:decoration-8 underline-offset-8">শিক্ষক</span> মন্ডলী
           </h2>
-        </div>
+        </motion.div>
 
         {/* টিচার গ্রিড */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-24 gap-x-12 mt-20">
           {visibleTeachers.map((teacher, index) => (
-            <div key={index} className="relative group">
+            <motion.div 
+              key={index} 
+              initial={{ opacity: 0, y: 50, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{ 
+                duration: 0.5, 
+                delay: index * 0.1, 
+                ease: "easeOut"
+              }}
+              className="relative group"
+            >
               
-              {/* Card Body with Constant Border and Hover Glow */}
+              {/* Card Body */}
               <div className={`relative bg-white/90 backdrop-blur-md border-2 p-8 pt-28 rounded-[40px] transition-all duration-500 flex flex-col items-center hover:-translate-y-2 ${teacher.borderColor} ${teacher.glowColor}`}>
                 
                 {/* 🟢 ইমেজ সেকশন */}
@@ -127,17 +146,22 @@ const Teachers: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
-        {/* 🟢 আপডেট করা বাটন: Green Color with Glow */}
-        <div className="text-center mt-24">
+        {/* 🟢 আপডেট করা বাটন এনিমেশন */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.5 }}
+          className="text-center mt-24"
+        >
           <button 
             onClick={() => setShowAll(!showAll)}
             className="group relative inline-flex items-center gap-3 bg-green-500 text-white px-10 py-4 lg:px-12 lg:py-5 rounded-full font-black text-base lg:text-lg shadow-[0_10px_30px_rgba(34,197,94,0.3)] hover:shadow-[0_15px_40px_rgba(34,197,94,0.5)] hover:bg-green-600 transition-all duration-300 active:scale-95 overflow-hidden"
           >
-            {/* Hover Shine Effect */}
             <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
             
             <span className="relative z-10">
@@ -147,7 +171,7 @@ const Teachers: React.FC = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
             </svg>
           </button>
-        </div>
+        </motion.div>
 
       </div>
     </section>
