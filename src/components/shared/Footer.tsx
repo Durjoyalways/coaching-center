@@ -2,11 +2,11 @@
 
 import React from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 const Footer: React.FC = () => {
-  // অ্যানিমেশন ভ্যারিয়েন্ট - প্রতিবার স্ক্রল করলে কাজ করার জন্য
-  const fadeInUp = {
+  // ১. টাইপস্ক্রিপ্ট এরর ফিক্স করার জন্য Variants টাইপ ডিফাইন করা হয়েছে
+  const fadeInUp: Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: { 
       opacity: 1, 
@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
     }
   };
 
-  const staggerContainer = {
+  const staggerContainer: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -47,7 +47,7 @@ const Footer: React.FC = () => {
       <motion.div 
         initial="hidden"
         whileInView="visible"
-        // ⚡ এটিই মূল পরিবর্তন: 'once: false' মানে প্রতিবার স্ক্রল করলেই অ্যানিমেশন হবে
+        // ২. 'once: false' দেওয়া হয়েছে যাতে প্রতিবার স্ক্রল করলে অ্যানিমেশন কাজ করে
         viewport={{ once: false, amount: 0.2 }} 
         variants={fadeInUp}
         className="max-w-7xl mx-auto px-4 lg:px-8 relative z-10"
@@ -61,6 +61,7 @@ const Footer: React.FC = () => {
             className="absolute -inset-1 bg-gradient-to-r from-[#10ac84]/20 via-green-200/20 to-emerald-400/20 rounded-[25px] lg:rounded-[60px] blur-lg"
           ></motion.div>
 
+          {/* 🌿 মেইন ফুটার কার্ড - হালকা সবুজ ব্যাকগ্রাউন্ড */}
           <div className="relative backdrop-blur-2xl bg-[#f0fdf4]/90 border border-[#10ac84]/20 rounded-[25px] lg:rounded-[60px] p-6 lg:p-16 shadow-[0_10px_30px_rgba(16,172,132,0.05)] transition-all duration-500 group-hover:border-[#10ac84]/40">
             
             <motion.div 
@@ -146,7 +147,7 @@ const Footer: React.FC = () => {
 
             </motion.div>
 
-            {/* কপিরাইট */}
+            {/* কপিরাইট ও স্ক্রল টু টপ */}
             <motion.div 
               variants={fadeInUp}
               className="mt-8 lg:mt-16 pt-5 border-t border-[#10ac84]/10 flex flex-row items-center justify-between gap-4"
