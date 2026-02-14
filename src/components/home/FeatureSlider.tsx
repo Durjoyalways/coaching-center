@@ -4,15 +4,15 @@ import React from "react";
 
 const FeatureSlider: React.FC = () => {
   const items = [
-    { name: "গণিত", icon: "📐", glow: "shadow-emerald-200/50", border: "border-emerald-100" },
-    { name: "পদার্থবিজ্ঞান", icon: "⚛️", glow: "shadow-orange-200/50", border: "border-orange-100" },
-    { name: "রসায়ন", icon: "🧪", glow: "shadow-blue-200/50", border: "border-blue-100" },
-    { name: "ইংরেজি স্পোকেন", icon: "🗣️", glow: "shadow-purple-200/50", border: "border-purple-100" },
-    { name: "জীববিজ্ঞান", icon: "🧬", glow: "shadow-green-200/50", border: "border-green-100" },
-    { name: "উচ্চতর গণিত", icon: "📊", glow: "shadow-yellow-200/50", border: "border-yellow-100" },
-    { name: "মডেল টেস্ট", icon: "📝", glow: "shadow-rose-200/50", border: "border-rose-100" },
-    { name: "প্রশ্ন সলভ", icon: "🔍", glow: "shadow-cyan-200/50", border: "border-cyan-100" },
-    { name: "সেরা শিক্ষক", icon: "👨‍🏫", glow: "shadow-indigo-200/50", border: "border-indigo-100" },
+    { name: "গণিত", icon: "📐", border: "border-green-500" },
+    { name: "পদার্থবিজ্ঞান", icon: "⚛️", border: "border-yellow-500" }, // Gold color
+    { name: "রসায়ন", icon: "🧪", border: "border-green-500" },
+    { name: "ইংরেজি স্পোকেন", icon: "🗣️", border: "border-yellow-500" },
+    { name: "জীববিজ্ঞান", icon: "🧬", border: "border-green-500" },
+    { name: "উচ্চতর গণিত", icon: "📊", border: "border-yellow-500" },
+    { name: "মডেল টেস্ট", icon: "📝", border: "border-green-500" },
+    { name: "প্রশ্ন সলভ", icon: "🔍", border: "border-yellow-500" },
+    { name: "সেরা শিক্ষক", icon: "👨‍🏫", border: "border-green-500" },
   ];
 
   return (
@@ -23,7 +23,7 @@ const FeatureSlider: React.FC = () => {
         <div className="absolute top-0 left-10 text-4xl lg:text-6xl opacity-10 animate-float"
              style={{ filter: 'drop-shadow(0 0 10px rgba(34, 197, 94, 0.4))' }}>🧪</div>
         <div className="absolute bottom-0 right-10 text-4xl lg:text-6xl opacity-10 animate-spin-slow"
-             style={{ filter: 'drop-shadow(0 0 10px rgba(59, 130, 246, 0.4))' }}>⚛️</div>
+             style={{ filter: 'drop-shadow(0 0 10px rgba(234, 179, 8, 0.4))' }}>⚛️</div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 mb-8 lg:mb-14 text-center relative z-10">
@@ -51,9 +51,9 @@ const FeatureSlider: React.FC = () => {
           {[...items, ...items].map((item, index) => (
             <div
               key={index}
-              className={`mx-3 lg:mx-6 px-5 lg:px-8 py-3 lg:py-5 rounded-[20px] lg:rounded-[28px] flex items-center gap-3 lg:gap-4 border-2 border-white bg-white/70 backdrop-blur-md shadow-[0_5px_15px_rgba(0,0,0,0.03)] transition-all duration-500 hover:scale-105 lg:hover:scale-110 hover:-translate-y-1 lg:hover:-translate-y-2 cursor-pointer group/item hover:bg-white hover:border-green-100`}
+              className={`mx-3 lg:mx-6 px-5 lg:px-8 py-3 lg:py-5 rounded-[20px] lg:rounded-[28px] flex items-center gap-3 lg:gap-4 border-[3px] ${item.border} bg-white/80 backdrop-blur-md shadow-[0_5px_15px_rgba(0,0,0,0.03)] transition-all duration-500 hover:scale-105 lg:hover:scale-110 hover:-translate-y-1 lg:hover:-translate-y-2 cursor-pointer group/item hover:bg-white hover:shadow-2xl`}
             >
-              {/* Icon Holder with Glow */}
+              {/* Icon Holder with drop shadow */}
               <div className="text-xl lg:text-3xl transform group-hover/item:rotate-12 transition-transform duration-500 drop-shadow-sm">
                 {item.icon}
               </div>
@@ -62,8 +62,8 @@ const FeatureSlider: React.FC = () => {
                 {item.name}
               </span>
               
-              {/* Inner Accent Dot */}
-              <div className="w-1 h-1 lg:w-1.5 lg:h-1.5 rounded-full bg-green-200 group-hover/item:bg-green-500 transition-all"></div>
+              {/* Inner Accent Dot matching the border */}
+              <div className={`w-1 h-1 lg:w-1.5 lg:h-1.5 rounded-full ${item.border === 'border-green-500' ? 'bg-green-500' : 'bg-yellow-500'} transition-all`}></div>
             </div>
           ))}
         </div>

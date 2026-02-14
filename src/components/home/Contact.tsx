@@ -15,11 +15,12 @@ const Contact: React.FC = () => {
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
         <div className="absolute top-[10%] left-[5%] text-5xl lg:text-8xl opacity-10 lg:opacity-30 animate-spin-slow">⚛️</div>
         <div className="absolute bottom-[5%] right-[5%] text-6xl lg:text-9xl opacity-10 lg:opacity-30 animate-float">🧪</div>
-        <div className="absolute top-[20%] right-[2%] text-4xl lg:text-7xl font-black text-green-500/5 -rotate-12">HELP?</div>
+        <div className="absolute top-[20%] right-[2%] text-4xl lg:text-7xl font-black text-green-50/5 -rotate-12">HELP?</div>
       </div>
 
       <div className="max-w-7xl mx-auto px-10 md:px-6 relative z-10">
-        <div className="relative bg-white/70 backdrop-blur-xl border border-white rounded-[40px] lg:rounded-[80px] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.03)]">
+        {/* মেইন কন্টেইনার কার্ড - বর্ডার যোগ করা হয়েছে */}
+        <div className="relative bg-white/70 backdrop-blur-xl border-2 border-green-100 rounded-[40px] lg:rounded-[80px] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.03)] hover:border-green-200 transition-colors duration-500">
           
           <div className="flex flex-col lg:flex-row items-stretch">
             
@@ -45,7 +46,7 @@ const Contact: React.FC = () => {
                     "ভর্তির নিয়মাবলী ও ফি সম্পর্কে জানুন"
                 ].map((text, i) => (
                     <div key={i} className="flex items-center gap-4 group">
-                        <div className="w-6 h-6 lg:w-8 lg:h-8 bg-green-50 text-green-600 rounded-lg lg:rounded-xl flex items-center justify-center text-xs lg:text-sm font-black shadow-sm group-hover:bg-green-500 group-hover:text-white transition-all duration-300">
+                        <div className="w-6 h-6 lg:w-8 lg:h-8 bg-green-50 text-green-600 rounded-lg lg:rounded-xl flex items-center justify-center text-xs lg:text-sm font-black shadow-sm group-hover:bg-green-500 group-hover:text-white transition-all duration-300 border border-green-100">
                             ✓
                         </div>
                         <p className="text-slate-700 font-extrabold text-xs lg:text-base">{text}</p>
@@ -55,14 +56,16 @@ const Contact: React.FC = () => {
             </div>
 
             {/* ডান পাশ: WhatsApp কার্ড */}
-            <div className="lg:w-1/2 p-6 lg:p-12 flex items-center justify-center bg-gradient-to-br from-green-50/50 to-yellow-50/50 border-t lg:border-t-0 lg:border-l border-white/50">
+            <div className="lg:w-1/2 p-6 lg:p-12 flex items-center justify-center bg-gradient-to-br from-green-50/50 to-yellow-50/50 border-t lg:border-t-0 lg:border-l border-green-100">
               <div className="relative group w-full max-w-sm">
                 
+                {/* কার্ডের পেছনের গ্লো */}
                 <div className="absolute inset-0 bg-green-400 opacity-0 group-hover:opacity-10 blur-3xl transition-opacity duration-700 rounded-[30px] lg:rounded-[50px]" />
                 
-                <div className="relative bg-white/90 p-8 lg:p-12 rounded-[30px] lg:rounded-[50px] shadow-[0_15px_40px_rgba(0,0,0,0.04)] border border-white text-center transition-all duration-500 group-hover:-translate-y-2">
+                {/* হোয়াটসঅ্যাপ কার্ড - এখানে স্থায়ী বর্ডার কালার দেওয়া হয়েছে */}
+                <div className="relative bg-white/90 p-8 lg:p-12 rounded-[30px] lg:rounded-[50px] shadow-[0_15px_40px_rgba(0,0,0,0.04)] border-2 border-green-200 group-hover:border-green-500 text-center transition-all duration-500 group-hover:-translate-y-2">
                   
-                  {/* WhatsApp Icon - Optimized Size */}
+                  {/* WhatsApp Icon */}
                   <div className="w-16 h-16 lg:w-20 lg:h-20 bg-[#25D366] rounded-2xl lg:rounded-[25px] flex items-center justify-center mx-auto mb-6 shadow-[0_10px_25px_rgba(37,211,102,0.3)] group-hover:rotate-12 transition-transform duration-500">
                     <svg className="w-8 h-8 lg:w-10 lg:h-10" fill="white" viewBox="0 0 24 24">
                       <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.588-5.946 0-6.556 5.332-11.891 11.891-11.891 3.181 0 6.167 1.24 8.413 3.488 2.246 2.248 3.484 5.232 3.484 8.402 0 6.556-5.332 11.891-11.891 11.891-2.01 0-3.987-.51-5.742-1.47l-6.334 1.689zm6.086-5.309l.345.204c1.447.86 3.123 1.314 4.858 1.314 4.817 0 8.735-3.918 8.735-8.735 0-2.333-.909-4.524-2.56-6.175-1.651-1.652-3.846-2.561-6.175-2.561-4.817 0-8.735 3.918-8.735 8.735 0 1.68.47 3.32 1.358 4.767l.223.364-.951 3.475 3.562-.951z" />
@@ -84,7 +87,7 @@ const Contact: React.FC = () => {
                     </svg>
                   </a>
                   
-                  <div className="mt-6 pt-6 border-t border-slate-50">
+                  <div className="mt-6 pt-6 border-t border-slate-100">
                     <p className="text-[9px] text-slate-400 font-black uppercase tracking-[0.2em]">অফিস হেল্পলাইন</p>
                     <p className="text-slate-800 font-black text-base lg:text-lg mt-1">+৮৮০ ১৭১২-৩৪৫৬৭৮</p>
                   </div>

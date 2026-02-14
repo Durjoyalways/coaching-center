@@ -93,7 +93,7 @@ const Teachers: React.FC = () => {
               {/* Card Body with Constant Border and Hover Glow */}
               <div className={`relative bg-white/90 backdrop-blur-md border-2 p-8 pt-28 rounded-[40px] transition-all duration-500 flex flex-col items-center hover:-translate-y-2 ${teacher.borderColor} ${teacher.glowColor}`}>
                 
-                {/* 🟢 গ্রিন/হলুদ সার্কেল ও ইমেজ */}
+                {/* 🟢 ইমেজ সেকশন */}
                 <div className="absolute -top-20 flex justify-center items-center w-40 h-40 lg:w-48 lg:h-48 z-20">
                   <div className={`absolute inset-0 rounded-full transition-all duration-500 group-hover:scale-110 shadow-xl ${teacher.accent === 'green' ? 'bg-green-500 shadow-green-200' : 'bg-yellow-500 shadow-yellow-200'}`} />
                   
@@ -131,16 +131,19 @@ const Teachers: React.FC = () => {
           ))}
         </div>
 
-        {/* বাটন */}
+        {/* 🟢 আপডেট করা বাটন: Green Color with Glow */}
         <div className="text-center mt-24">
           <button 
             onClick={() => setShowAll(!showAll)}
-            className="group relative inline-flex items-center gap-3 bg-white text-slate-800 px-10 py-4 lg:px-12 lg:py-5 rounded-full font-black text-base lg:text-lg shadow-lg hover:shadow-2xl transition-all duration-300 border border-slate-100 active:scale-95"
+            className="group relative inline-flex items-center gap-3 bg-green-500 text-white px-10 py-4 lg:px-12 lg:py-5 rounded-full font-black text-base lg:text-lg shadow-[0_10px_30px_rgba(34,197,94,0.3)] hover:shadow-[0_15px_40px_rgba(34,197,94,0.5)] hover:bg-green-600 transition-all duration-300 active:scale-95 overflow-hidden"
           >
+            {/* Hover Shine Effect */}
+            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
+            
             <span className="relative z-10">
                 {showAll ? "কম দেখুন" : `সকল শিক্ষক দেখুন`}
             </span>
-            <svg className={`h-5 w-5 lg:h-6 lg:w-6 text-green-600 transition-transform duration-500 ${showAll ? "rotate-180" : "group-hover:translate-y-1"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className={`relative z-10 h-5 w-5 lg:h-6 lg:w-6 text-white transition-transform duration-500 ${showAll ? "rotate-180" : "group-hover:translate-y-1"}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
             </svg>
           </button>

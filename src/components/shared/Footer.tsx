@@ -17,10 +17,11 @@ const Footer: React.FC = () => {
         
         {/* 🌿 মেইন ফুটার কার্ড */}
         <div className="relative group">
-          {/* Card Outer Glow */}
-          <div className="absolute -inset-1 bg-gradient-to-r from-green-400/10 via-yellow-300/10 to-emerald-400/10 rounded-[35px] lg:rounded-[60px] blur-xl opacity-50 group-hover:opacity-100 transition duration-1000"></div>
+          {/* Card Outer Glow - মাউস নিলে এটি ফুটে উঠবে */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-green-400/20 via-yellow-300/20 to-emerald-400/20 rounded-[35px] lg:rounded-[60px] blur-xl opacity-50 group-hover:opacity-100 transition duration-1000"></div>
 
-          <div className="relative backdrop-blur-2xl bg-white/80 border border-white/50 rounded-[35px] lg:rounded-[60px] p-8 lg:p-16 shadow-[0_10px_40px_rgba(0,0,0,0.02)]">
+          {/* মেইন ফুটার কার্ড বডি - স্থায়ী বর্ডার (border-2 border-green-100) যোগ করা হয়েছে */}
+          <div className="relative backdrop-blur-2xl bg-white/80 border-2 border-green-100 rounded-[35px] lg:rounded-[60px] p-8 lg:p-16 shadow-[0_10px_40px_rgba(0,0,0,0.02)] transition-all duration-500 group-hover:border-green-400/50">
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
               
@@ -37,45 +38,47 @@ const Footer: React.FC = () => {
                 </p>
                 <div className="flex justify-center lg:justify-start gap-3">
                   {["FB", "YT", "LI"].map((social) => (
-                    <div key={social} className="w-9 h-9 lg:w-11 lg:h-11 rounded-xl bg-white border border-slate-100 flex items-center justify-center shadow-sm hover:border-green-400 hover:text-green-600 hover:-translate-y-1 transition-all cursor-pointer font-black text-[9px] text-slate-400">
+                    <div key={social} className="w-9 h-9 lg:w-11 lg:h-11 rounded-xl bg-white border border-slate-200 flex items-center justify-center shadow-sm hover:border-green-400 hover:text-green-600 hover:-translate-y-1 transition-all cursor-pointer font-black text-[9px] text-slate-400">
                       {social}
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* ২. কুইক লিঙ্কস (মোবাইলে ২ কলামের গ্রিড হিসেবে দেখাবে) */}
-              <div className="grid grid-cols-2 lg:grid-cols-1 gap-6 lg:col-span-2">
-                <div>
-                  <h4 className="text-sm lg:text-lg font-black text-slate-800 mb-4 lg:mb-8 flex items-center gap-2">
-                    <span className="w-1.5 h-4 bg-green-500 rounded-full"></span>
-                    লিঙ্কসমূহ
-                  </h4>
-                  <ul className="space-y-3 text-slate-500 text-[11px] lg:text-sm font-bold">
-                    <li><Link href="/" className="hover:text-green-500 transition-all flex items-center gap-2"> হোম পেজ</Link></li>
-                    <li><Link href="/courses" className="hover:text-green-500 transition-all flex items-center gap-2"> কোর্সসমূহ</Link></li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="text-sm lg:text-lg font-black text-slate-800 mb-4 lg:mb-8 flex items-center gap-2">
-                    <span className="w-1.5 h-4 bg-yellow-400 rounded-full"></span>
-                    ব্যাচ
-                  </h4>
-                  <ul className="space-y-3 text-slate-500 text-[11px] lg:text-sm font-bold">
-                    <li className="flex items-center gap-2 italic">৬ষ্ঠ - ৮ম শ্রেণি</li>
-                    <li className="flex items-center gap-2 italic">এসএসসি প্রস্তুতি</li>
-                  </ul>
-                </div>
+              {/* ২. কুইক লিঙ্কসমূহ */}
+              <div>
+                <h4 className="text-sm lg:text-lg font-black text-slate-800 mb-4 lg:mb-8 flex items-center gap-2">
+                  <span className="w-1.5 h-4 bg-green-500 rounded-full"></span>
+                  লিঙ্কসমূহ
+                </h4>
+                <ul className="space-y-3 text-slate-500 text-[11px] lg:text-sm font-bold">
+                  <li><Link href="/" className="hover:text-green-500 transition-all flex items-center gap-2"> হোম পেজ</Link></li>
+                  <li><Link href="/courses" className="hover:text-green-500 transition-all flex items-center gap-2"> কোর্সসমূহ</Link></li>
+                  <li><Link href="/about" className="hover:text-green-500 transition-all flex items-center gap-2"> আমাদের সম্পর্কে</Link></li>
+                </ul>
               </div>
 
-              {/* ৩. সরাসরি যোগাযোগ */}
+              {/* ৩. ব্যাচ সেকশন */}
+              <div>
+                <h4 className="text-sm lg:text-lg font-black text-slate-800 mb-4 lg:mb-8 flex items-center gap-2">
+                  <span className="w-1.5 h-4 bg-yellow-400 rounded-full"></span>
+                  ব্যাচসমূহ
+                </h4>
+                <ul className="space-y-3 text-slate-500 text-[11px] lg:text-sm font-bold">
+                  <li className="flex items-center gap-2 italic">৬ষ্ঠ - ৮ম শ্রেণি</li>
+                  <li className="flex items-center gap-2 italic">এসএসসি প্রস্তুতি</li>
+                  <li className="flex items-center gap-2 italic">মডেল টেস্ট প্রোগ্রাম</li>
+                </ul>
+              </div>
+
+              {/* ৪. সরাসরি যোগাযোগ */}
               <div>
                 <h4 className="text-sm lg:text-lg font-black text-slate-800 mb-4 lg:mb-8 flex items-center gap-2">
                   <span className="w-1.5 h-4 bg-emerald-500 rounded-full"></span>
                   যোগাযোগ
                 </h4>
-                <div className="bg-gradient-to-br from-white to-green-50/30 p-5 rounded-[25px] border border-white shadow-sm">
+                {/* কন্টাক্ট বক্স - এখানেও স্থায়ী বর্ডার (border-green-200) দেওয়া হয়েছে */}
+                <div className="bg-gradient-to-br from-white to-green-50/30 p-5 rounded-[25px] border-2 border-green-200 shadow-sm transition-all duration-300 hover:border-green-400">
                   <p className="text-slate-700 text-[11px] lg:text-sm font-black mb-2">মেইন রোড, ঢাকা।</p>
                   <p className="text-green-600 text-sm lg:text-base font-black tracking-tight italic">
                     📞 +৮৮০ ১৭১২-৩৪৫
@@ -85,16 +88,19 @@ const Footer: React.FC = () => {
 
             </div>
 
-            {/* কপিরাইট সেকশন - মোবাইলে আরও ছোট */}
-            <div className="mt-10 lg:mt-16 pt-6 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-6">
+            {/* কপিরাইট সেকশন */}
+            <div className="mt-10 lg:mt-16 pt-6 border-t border-slate-200 flex flex-col md:flex-row items-center justify-between gap-6">
               <p className="text-slate-400 text-[9px] lg:text-[10px] font-black uppercase tracking-[0.2em] text-center">
                 © {new Date().getFullYear()} শিক্ষার আলো | Excellence in Education
               </p>
               
               <div className="flex items-center gap-3">
-                 <button onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} className="w-10 h-10 lg:w-12 lg:h-12 bg-white text-green-600 rounded-xl flex items-center justify-center text-lg shadow-sm border border-slate-100 hover:bg-green-50 transition-all">
+                  <button 
+                    onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})} 
+                    className="w-10 h-10 lg:w-12 lg:h-12 bg-white text-green-600 rounded-xl flex items-center justify-center text-lg shadow-sm border-2 border-green-100 hover:bg-green-500 hover:text-white hover:border-green-500 transition-all duration-300"
+                  >
                     ↑
-                 </button>
+                  </button>
               </div>
             </div>
           </div>
