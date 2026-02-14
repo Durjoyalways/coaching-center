@@ -4,81 +4,110 @@ import React from "react";
 import Link from "next/link";
 
 const Footer: React.FC = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="relative pt-8 lg:pt-16 pb-6 bg-[#fcfcfc] border-t border-slate-100">
-      <div className="max-w-7xl mx-auto px-4 lg:px-8">
-        
-        {/* 🌿 মেইন ফুটার কার্ড - হালকা সবুজ (Light Green) থিম */}
-        <div className="bg-[#f0fdf4] border border-[#10ac84]/20 rounded-[24px] lg:rounded-[48px] p-5 lg:p-12 shadow-sm transition-all duration-300 hover:shadow-md">
+    <footer className="relative bg-[#fcfcfc] pt-12 lg:pt-24 pb-8 border-t border-slate-100 overflow-hidden">
+      {/* ব্যাকগ্রাউন্ড ডেকোরেশন - সিএসএস এনিমেশন */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-20">
+        <div className="absolute top-[-10%] left-[-5%] w-64 h-64 bg-emerald-100 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-[10%] right-[-5%] w-80 h-80 bg-green-50 rounded-full blur-3xl animate-bounce"></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-5 lg:px-8 relative z-10">
+        {/* মেইন কার্ড */}
+        <div className="bg-white/80 backdrop-blur-md border border-emerald-100 rounded-[30px] lg:rounded-[60px] p-8 lg:p-16 shadow-[0_20px_50px_rgba(16,172,132,0.05)]">
           
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
             
-            {/* ১. ব্র্যান্ড সেকশন */}
-            <div className="col-span-2 lg:col-span-1">
-              <div className="flex items-center gap-2 mb-3 lg:mb-6">
-                <div className="w-8 h-8 lg:w-10 lg:h-10 bg-[#10ac84] rounded-lg flex items-center justify-center text-white font-bold text-sm lg:text-lg shadow-sm">
+            {/* ১. ব্র্যান্ড ইনফো */}
+            <div className="space-y-6">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 lg:w-12 lg:h-12 bg-[#10ac84] rounded-2xl flex items-center justify-center text-white font-black text-xl shadow-lg rotate-3">
                   শ
                 </div>
-                <h3 className="text-lg lg:text-xl font-black text-slate-800">
+                <h3 className="text-xl lg:text-2xl font-black text-slate-800 tracking-tight">
                   শিক্ষার <span className="text-[#10ac84]">আলো</span>
                 </h3>
               </div>
-              <p className="text-slate-500 text-[10px] lg:text-sm font-medium leading-relaxed mb-4 max-w-[250px]">
-                সঠিক দিকনির্দেশনাই সাফল্যের মূল চাবিকাঠি। আমরা আছি প্রতিটি শিক্ষার্থীর উজ্জ্বল ভবিষ্যৎ নিশ্চিত করতে।
+              <p className="text-slate-500 text-sm lg:text-base leading-relaxed font-medium">
+                সঠিক দিকনির্দেশনাই সাফল্যের মূল চাবিকাঠি। আমরা আপনার স্বপ্ন পূরণে অঙ্গীকারবদ্ধ।
               </p>
-              {/* সোশ্যাল আইকন */}
-              <div className="flex gap-2">
-                {["FB", "YT", "LI"].map((social) => (
-                  <div key={social} className="w-7 h-7 lg:w-9 lg:h-9 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-[8px] lg:text-[10px] font-bold text-slate-400 hover:border-[#10ac84] hover:text-[#10ac84] transition-all cursor-pointer">
-                    {social}
-                  </div>
+              {/* সোশ্যাল বাটন */}
+              <div className="flex gap-3">
+                {['FB', 'YT', 'LN'].map((item) => (
+                  <button key={item} className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-[10px] font-bold text-slate-400 hover:bg-[#10ac84] hover:text-white hover:border-[#10ac84] transition-all duration-300">
+                    {item}
+                  </button>
                 ))}
               </div>
             </div>
 
-            {/* ২. লিঙ্কসমূহ */}
-            <div className="col-span-1">
-              <h4 className="text-[11px] lg:text-sm font-black text-slate-800 uppercase tracking-widest mb-3 lg:mb-6">লিঙ্কসমূহ</h4>
-              <ul className="space-y-2 text-slate-500 text-[10px] lg:text-sm font-semibold">
-                <li><Link href="/" className="hover:text-[#10ac84] transition-colors">হোম</Link></li>
-                <li><Link href="/courses" className="hover:text-[#10ac84] transition-colors">কোর্সসমূহ</Link></li>
-                <li><Link href="/about" className="hover:text-[#10ac84] transition-colors">আমাদের সম্পর্কে</Link></li>
+            {/* ২. কুইক লিঙ্কস */}
+            <div className="lg:ml-10">
+              <h4 className="text-sm font-black text-slate-800 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
+                <span className="w-2 h-2 bg-emerald-400 rounded-full"></span>
+                নেভিগেশন
+              </h4>
+              <ul className="space-y-4">
+                {['হোম', 'কোর্সসমূহ', 'আমাদের সম্পর্কে', 'যোগাযোগ'].map((link) => (
+                  <li key={link}>
+                    <Link href="#" className="text-slate-500 hover:text-[#10ac84] font-semibold text-sm lg:text-base transition-colors duration-200">
+                      {link}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
-            {/* ৩. ব্যাচসমূহ */}
-            <div className="col-span-1">
-              <h4 className="text-[11px] lg:text-sm font-black text-slate-800 uppercase tracking-widest mb-3 lg:mb-6">ব্যাচসমূহ</h4>
-              <ul className="space-y-2 text-slate-500 text-[10px] lg:text-sm font-semibold italic">
-                <li>৬ষ্ঠ - ৮ম শ্রেণি</li>
-                <li>এসএসসি প্রস্তুতি</li>
-                <li>মডেল টেস্ট</li>
+            {/* ৩. ব্যাচ আপডেট */}
+            <div>
+              <h4 className="text-sm font-black text-slate-800 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
+                <span className="w-2 h-2 bg-yellow-400 rounded-full"></span>
+                বর্তমান ব্যাচ
+              </h4>
+              <ul className="space-y-4">
+                {['৬ষ্ঠ - ৮ম শ্রেণি', 'এসএসসি ২০২৬', 'মডেল টেস্ট স্পেশাল'].map((batch) => (
+                  <li key={batch} className="flex items-center gap-2 text-slate-500 font-semibold text-sm lg:text-base">
+                    <span className="text-emerald-500 text-xs">●</span> {batch}
+                  </li>
+                ))}
               </ul>
             </div>
 
-            {/* ৪. যোগাযোগ */}
-            <div className="col-span-2 lg:col-span-1">
-              <h4 className="text-[11px] lg:text-sm font-black text-slate-800 mb-3 lg:mb-6 uppercase tracking-widest">যোগাযোগ</h4>
-              <div className="bg-white/60 backdrop-blur-sm p-3 lg:p-5 rounded-xl lg:rounded-2xl border border-[#10ac84]/10">
-                <p className="text-slate-700 text-[9px] lg:text-sm font-bold mb-1">মেইন রোড, ঢাকা।</p>
-                <p className="text-[#10ac84] text-xs lg:text-base font-black">
-                  📞 +৮৮০ ১৭১২-৩৪৫
+            {/* ৪. কন্টাক্ট বক্স */}
+            <div>
+              <h4 className="text-sm font-black text-slate-800 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
+                <span className="w-2 h-2 bg-blue-400 rounded-full"></span>
+                সরাসরি কথা বলুন
+              </h4>
+              <div className="bg-[#f0fdf4] p-6 rounded-[25px] border border-emerald-100 group transition-all duration-300 hover:shadow-inner">
+                <p className="text-slate-600 text-xs font-bold mb-2 uppercase tracking-tighter">হেল্পলাইন নম্বর</p>
+                <p className="text-[#10ac84] text-lg lg:text-xl font-black group-hover:tracking-wider transition-all">
+                  +৮৮০ ১৭১২-৩৪৫৬৭৮
                 </p>
+                <div className="mt-4 pt-4 border-t border-emerald-200/50">
+                  <p className="text-slate-500 text-xs font-bold">মেইন রোড, ঢাকা, বাংলাদেশ।</p>
+                </div>
               </div>
             </div>
 
           </div>
 
-          {/* ৫. কপিরাইট এবং স্ক্রল বাটন */}
-          <div className="mt-8 lg:mt-12 pt-5 border-t border-slate-200/50 flex items-center justify-between">
-            <p className="text-slate-400 text-[8px] lg:text-[10px] font-bold uppercase tracking-wider">
-              © {new Date().getFullYear()} শিক্ষার আলো
+          {/* ৫. ফুটনোট ও স্ক্রল টু টপ */}
+          <div className="mt-12 lg:mt-20 pt-8 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-6">
+            <p className="text-slate-400 text-xs font-bold uppercase tracking-widest">
+              © {currentYear} শিক্ষার আলো — All Rights Reserved
             </p>
+            
             <button 
-              onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}
-              className="w-7 h-7 lg:w-10 lg:h-10 bg-white border border-slate-200 rounded-lg flex items-center justify-center text-slate-400 hover:bg-[#10ac84] hover:text-white hover:border-[#10ac84] transition-all shadow-sm"
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="group flex items-center gap-3 text-[#10ac84] font-black text-xs uppercase tracking-widest hover:opacity-70 transition-all"
             >
-              ↑
+              Back to top 
+              <span className="w-10 h-10 rounded-full bg-white border border-emerald-100 flex items-center justify-center shadow-sm group-hover:-translate-y-1 transition-transform">
+                ↑
+              </span>
             </button>
           </div>
 
