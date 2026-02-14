@@ -6,7 +6,7 @@ import { auth, db } from "@/lib/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const RegisterPage = () => {
   const router = useRouter();
@@ -19,6 +19,7 @@ const RegisterPage = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -30,6 +31,7 @@ const RegisterPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setErrorMsg("");
 
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -48,136 +50,184 @@ const RegisterPage = () => {
         createdAt: new Date().toISOString(),
       });
 
-      alert("অভিনন্দন! আপনার একাউন্ট তৈরি হয়েছে।");
       router.push("/login"); 
 
     } catch (error: any) {
       console.error(error);
-      alert("রেজিস্ট্রেশন ব্যর্থ: " + error.message);
+      setErrorMsg("রেজিস্ট্রেশন ব্যর্থ: ইমেইলটি ইতিমধ্যে ব্যবহৃত বা তথ্য ভুল।");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="bg-white min-h-screen flex items-center justify-center p-6 font-sans relative overflow-hidden">
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 lg:p-10 font-sans selection:bg-[#10ac84]/20">
       
-      {/* 📚 Background Educational Floating Icons */}
-      <div className="absolute inset-0 z-0 pointer-events-none select-none opacity-[0.15]">
-        <motion.div animate={{ y: [0, -20, 0], rotate: [0, 10, 0] }} transition={{ duration: 6, repeat: Infinity }} className="absolute top-10 right-[10%] text-7xl">🎓</motion.div>
-        <motion.div animate={{ y: [0, 25, 0], rotate: [0, -15, 0] }} transition={{ duration: 8, repeat: Infinity }} className="absolute top-1/2 left-[5%] text-6xl">🔬</motion.div>
-        <motion.div animate={{ scale: [1, 1.15, 1] }} transition={{ duration: 5, repeat: Infinity }} className="absolute bottom-10 right-[15%] text-8xl">⚛️</motion.div>
-        <motion.div animate={{ x: [-20, 20, -20] }} transition={{ duration: 7, repeat: Infinity }} className="absolute top-1/4 left-[20%] text-7xl">🧪</motion.div>
-        <div className="absolute bottom-1/4 left-10 text-5xl">📖</div>
-        <div className="absolute top-1/3 right-1/4 text-5xl">🧠</div>
+      {/* 🌌 ব্যাকগ্রাউন্ড গ্লো ইফেক্ট */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] left-[-5%] w-[40%] h-[40%] bg-[#10ac84]/10 blur-[120px] rounded-full animate-pulse" />
+        <div className="absolute bottom-[-10%] right-[-5%] w-[40%] h-[40%] bg-slate-200/50 blur-[120px] rounded-full animate-pulse" />
       </div>
 
-      {/* 🟢 Glowing Background Blob */}
-      <div className="absolute w-[600px] h-[600px] bg-green-200/20 rounded-full blur-[130px] z-0"></div>
-
-      {/* 💎 Glowing Register Card */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-2xl bg-white rounded-[55px] p-8 lg:p-14 border border-green-50 shadow-[0_25px_70px_rgba(34,197,94,0.1)] relative z-10 hover:shadow-[0_25px_90px_rgba(34,197,94,0.18)] transition-all duration-500 my-10"
+        transition={{ duration: 0.6 }}
+        className="relative w-full max-w-6xl bg-white rounded-[40px] lg:rounded-[60px] overflow-hidden shadow-[0_30px_100px_rgba(0,0,0,0.1)] flex flex-col lg:flex-row min-h-[700px] z-10 border border-slate-100"
       >
-        {/* Neon Glow Line */}
-        <div className="absolute top-0 left-1/4 right-1/4 h-1 bg-gradient-to-r from-transparent via-green-400 to-transparent shadow-[0_0_15px_#4ade80]"></div>
+        
+        {/* 🎨 বাম পাশ: ইলাস্ট্রেশন সেকশন (রঙ: #10ac84) */}
+        <div className="lg:w-5/12 bg-[#10ac84] p-10 lg:p-16 flex flex-col items-center justify-center text-center relative overflow-hidden">
+          
+          <motion.div 
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="relative z-10"
+          >
+            <div className="w-48 h-48 lg:w-64 lg:h-64 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-md border border-white/30 mb-8 relative shadow-2xl">
+              <span className="text-[100px] lg:text-[120px] drop-shadow-2xl animate-float">📖</span>
+              <span className="absolute bottom-2 -left-4 text-5xl opacity-60">✍️</span>
+              <span className="absolute bottom-2 -right-4 text-5xl opacity-60">🎓</span>
+            </div>
+            
+            <p className="text-white text-xl lg:text-2xl font-black mb-2">নতুন যাত্রা শুরু হোক!</p>
+            <p className="text-white/80 text-xs lg:text-sm italic px-4">
+              "শিক্ষার আলো কোচিং সেন্টারে যোগ দিয়ে আপনার মেধার বিকাশ ঘটান। আমরা আছি আপনার প্রতিটি পদক্ষেপে।"
+            </p>
+          </motion.div>
 
-        <div className="text-center mb-10">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-green-500 rounded-3xl text-white shadow-[0_10px_30px_rgba(34,197,94,0.3)] mb-6 transform hover:scale-110 transition-transform">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-10 h-10">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM3 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 018.625 21c-2.331 0-4.512-.645-6.374-1.766z" />
-            </svg>
+          <div className="absolute inset-0 opacity-10 pointer-events-none">
+             <div className="absolute top-[-5%] left-[-5%] w-48 h-48 border-4 border-white rounded-full" />
+             <div className="absolute bottom-[-10%] right-[10%] w-64 h-64 bg-white rounded-full" />
           </div>
-          <h1 className="text-4xl font-black text-slate-900 mb-2 tracking-tight">রেজিস্ট্রেশন</h1>
-          <p className="text-green-600 font-black text-[10px] uppercase tracking-[0.4em]">শিক্ষার আলোয় আপনাকে স্বাগতম</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* নাম */}
-          <div className="md:col-span-2 group">
-            <label className="block text-slate-400 font-black text-[10px] uppercase tracking-[0.2em] mb-2 ml-4 group-focus-within:text-green-500 transition-colors">Full Name</label>
-            <input 
-              name="name"
-              type="text" 
-              placeholder="আপনার পূর্ণ নাম"
-              onChange={handleChange}
-              className="w-full px-7 py-4 rounded-[22px] bg-slate-50 border border-transparent focus:border-green-400 focus:bg-white outline-none transition-all font-bold text-slate-700 shadow-inner"
-              required
-            />
+        {/* 🔐 ডান পাশ: রেজিস্ট্রেশন ফর্ম */}
+        <div className="lg:w-7/12 bg-white p-8 lg:p-16 flex flex-col justify-center relative">
+          
+          <div className="absolute top-0 right-10 lg:right-20">
+             <div className="bg-[#10ac84] text-white px-8 py-3 rounded-b-[20px] font-bold text-xs lg:text-sm shadow-lg">
+                রেজিস্ট্রেশন
+             </div>
           </div>
 
-          {/* ইমেইল */}
-          <div className="group">
-            <label className="block text-slate-400 font-black text-[10px] uppercase tracking-[0.2em] mb-2 ml-4 group-focus-within:text-green-500 transition-colors">Email</label>
-            <input 
-              name="email"
-              type="email" 
-              placeholder="ইমেইল দিন"
-              onChange={handleChange}
-              className="w-full px-7 py-4 rounded-[22px] bg-slate-50 border border-transparent focus:border-green-400 focus:bg-white outline-none transition-all font-bold text-slate-700 shadow-inner"
-              required
-            />
-          </div>
+          <div className="w-full max-w-lg mx-auto">
+            <header className="mb-10 text-center lg:text-left">
+              <h2 className="text-3xl lg:text-4xl font-black text-slate-800 tracking-tight">নতুন অ্যাকাউন্ট তৈরি করুন</h2>
+              <p className="text-slate-400 font-bold text-sm mt-2">তথ্যগুলো দিয়ে ফরমটি পূরণ করুন</p>
+            </header>
 
-          {/* ফোন */}
-          <div className="group">
-            <label className="block text-slate-400 font-black text-[10px] uppercase tracking-[0.2em] mb-2 ml-4 group-focus-within:text-green-500 transition-colors">Phone</label>
-            <input 
-              name="phone"
-              type="tel" 
-              placeholder="01XXXXXXXXX"
-              onChange={handleChange}
-              className="w-full px-7 py-4 rounded-[22px] bg-slate-50 border border-transparent focus:border-green-400 focus:bg-white outline-none transition-all font-bold text-slate-700 shadow-inner"
-              required
-            />
-          </div>
+            <AnimatePresence>
+              {errorMsg && (
+                <motion.div 
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="bg-red-50 text-red-600 p-4 rounded-2xl text-xs font-bold mb-6 border border-red-100 flex items-center gap-2"
+                >
+                  <span>⚠</span> {errorMsg}
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-          {/* পাসওয়ার্ড */}
-          <div className="md:col-span-2 group">
-            <label className="block text-slate-400 font-black text-[10px] uppercase tracking-[0.2em] mb-2 ml-4 group-focus-within:text-green-500 transition-colors">Set Password</label>
-            <input 
-              name="password"
-              type="password" 
-              placeholder="••••••••"
-              onChange={handleChange}
-              className="w-full px-7 py-4 rounded-[22px] bg-slate-50 border border-transparent focus:border-green-400 focus:bg-white outline-none transition-all font-bold text-slate-700 shadow-inner"
-              required
-            />
-          </div>
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+              
+              {/* নাম */}
+              <div className="md:col-span-2 relative group border-b-2 border-slate-100 focus-within:border-[#10ac84] transition-all py-1">
+                <label className="block text-[10px] uppercase tracking-widest font-black text-slate-400 mb-1 group-focus-within:text-[#10ac84]">
+                  পূর্ণ নাম
+                </label>
+                <input 
+                  name="name"
+                  type="text" 
+                  onChange={handleChange}
+                  className="w-full bg-transparent outline-none text-slate-700 font-bold py-1 placeholder:text-slate-200 placeholder:font-normal"
+                  placeholder="আপনার নাম লিখুন"
+                  required
+                />
+              </div>
 
-          {/* সাবমিট বাটন */}
-          <div className="md:col-span-2 mt-4">
-            <button 
-              type="submit" 
-              disabled={loading}
-              className="w-full relative group overflow-hidden bg-slate-900 text-white py-5 rounded-[25px] font-black text-lg transition-all duration-500 shadow-xl active:scale-95 disabled:opacity-50"
-            >
-              <div className="absolute inset-0 bg-green-500 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out"></div>
-              <span className="relative z-10 flex items-center justify-center gap-2">
-                {loading ? "অপেক্ষা করুন..." : "একাউন্ট তৈরি করুন"}
-                {!loading && <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-5 h-5 group-hover:translate-x-1 transition-transform">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                </svg>}
-              </span>
-            </button>
-          </div>
-        </form>
+              {/* ইমেইল */}
+              <div className="relative group border-b-2 border-slate-100 focus-within:border-[#10ac84] transition-all py-1">
+                <label className="block text-[10px] uppercase tracking-widest font-black text-slate-400 mb-1 group-focus-within:text-[#10ac84]">
+                  ইমেইল এড্রেস
+                </label>
+                <input 
+                  name="email"
+                  type="email" 
+                  onChange={handleChange}
+                  className="w-full bg-transparent outline-none text-slate-700 font-bold py-1 placeholder:text-slate-200 placeholder:font-normal"
+                  placeholder="example@mail.com"
+                  required
+                />
+              </div>
 
-        <div className="mt-10 text-center border-t border-slate-50 pt-8">
-          <p className="text-slate-400 font-bold text-sm">
-            ইতিমধ্যেই একাউন্ট আছে? {" "}
-            <Link href="/login" className="text-green-600 font-black hover:text-green-700 transition-colors">
-              লগইন করুন →
-            </Link>
-          </p>
+              {/* ফোন */}
+              <div className="relative group border-b-2 border-slate-100 focus-within:border-[#10ac84] transition-all py-1">
+                <label className="block text-[10px] uppercase tracking-widest font-black text-slate-400 mb-1 group-focus-within:text-[#10ac84]">
+                  ফোন নম্বর
+                </label>
+                <input 
+                  name="phone"
+                  type="tel" 
+                  onChange={handleChange}
+                  className="w-full bg-transparent outline-none text-slate-700 font-bold py-1 placeholder:text-slate-200 placeholder:font-normal"
+                  placeholder="017XXXXXXXX"
+                  required
+                />
+              </div>
+
+              {/* পাসওয়ার্ড */}
+              <div className="md:col-span-2 relative group border-b-2 border-slate-100 focus-within:border-[#10ac84] transition-all py-1">
+                <label className="block text-[10px] uppercase tracking-widest font-black text-slate-400 mb-1 group-focus-within:text-[#10ac84]">
+                  পাসওয়ার্ড সেট করুন
+                </label>
+                <input 
+                  name="password"
+                  type="password" 
+                  onChange={handleChange}
+                  className="w-full bg-transparent outline-none text-slate-700 font-bold py-1 placeholder:text-slate-200"
+                  placeholder="••••••••"
+                  required
+                />
+              </div>
+
+              {/* বাটন */}
+              <div className="md:col-span-2 mt-4">
+                <motion.button 
+                  whileHover={{ scale: 1.02, backgroundColor: "#0e916f" }}
+                  whileTap={{ scale: 0.98 }}
+                  disabled={loading}
+                  type="submit"
+                  className="w-full py-4 bg-[#10ac84] text-white rounded-full font-black text-lg shadow-[0_10px_25px_rgba(16,172,132,0.3)] transition-all flex items-center justify-center gap-2 tracking-wide"
+                >
+                  {loading ? (
+                    <span className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin"></span>
+                  ) : (
+                    "অ্যাকাউন্ট তৈরি করুন"
+                  )}
+                </motion.button>
+              </div>
+
+              <div className="md:col-span-2 flex justify-center mt-6">
+                <p className="text-slate-400 font-bold text-sm">
+                  ইতিমধ্যেই অ্যাকাউন্ট আছে? {" "}
+                  <Link href="/login" className="text-[#10ac84] hover:underline decoration-2 underline-offset-4">
+                    লগইন করুন
+                  </Link>
+                </p>
+              </div>
+            </form>
+          </div>
         </div>
+
       </motion.div>
 
-      {/* Decorative Dots */}
-      <div className="absolute top-1/3 left-1/4 w-3 h-3 bg-green-400 rounded-full animate-pulse blur-sm"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
+      {/* ব্র্যান্ডিং */}
+      <div className="fixed bottom-6 text-slate-300 text-[10px] uppercase tracking-[0.5em] font-black">
+        শিক্ষার আলো <span className="text-slate-400">কোচিং সেন্টার</span>
+      </div>
     </div>
   );
 };
