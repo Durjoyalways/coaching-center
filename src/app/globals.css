@@ -1,14 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  /* কাস্টম এনিমেশন ডিফাইন করা হচ্ছে */
+  /* কালার প্যালেট */
+  --color-navy-dark: #0a192f;
+  --color-navy-light: #0d213b;
+  --color-emerald-primary: #10b981;
+
+  /* কাস্টম এনিমেশন */
   --animate-spin-slow: spin 15s linear infinite;
   --animate-float: float 3s ease-in-out infinite;
   --animate-bounce-slow: bounce 5s infinite;
-  /* নতুন মারকিউ এনিমেশন যোগ করা হলো */
   --animate-marquee: marquee 35s linear infinite;
 
-  /* এনিমেশন কীভাবে কাজ করবে (Keyframes) */
+  /* কী-ফ্রেমস */
   @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-20px); }
@@ -20,12 +24,20 @@
   }
 }
 
+/* গ্লোবাল স্টাইলস */
 :root {
   --font-sans: var(--font-hind-siliguri), ui-sans-serif, system-ui;
+  /* ব্যাকগ্রাউন্ড এবং টেক্সট কালার ফিক্স */
+  background-color: #0a192f;
+  color: #ffffff;
 }
 
 body {
   font-family: var(--font-sans);
+  background-color: #0a192f; /* ডিফল্ট সাদা ব্যাকগ্রাউন্ড ওভাররাইড করা হলো */
+  color: #f1f5f9;
+  margin: 0;
+  padding: 0;
 }
 
 /* প্রফেশনাল গ্লো হোভার ইফেক্ট */
@@ -35,6 +47,24 @@ body {
 
 .hover-glow:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px -15px rgba(59, 130, 246, 0.25);
-  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 20px 40px -15px rgba(16, 185, 129, 0.25);
+  border-color: rgba(16, 185, 129, 0.5);
+}
+
+/* স্ক্রলবার কাস্টমাইজেশন (ঐচ্ছিক কিন্তু ডার্ক মোডে সুন্দর দেখায়) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a192f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #10b981;
 }
