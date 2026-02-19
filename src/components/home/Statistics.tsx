@@ -1,112 +1,139 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion"; // Framer Motion ইম্পোর্ট করা হয়েছে
+import React, { useEffect, useState, useRef } from "react";
+import { motion, useInView, useSpring, useTransform } from "framer-motion";
+
+// সংখ্যা এনিমেশনের জন্য ছোট একটি সাব-কম্পোনেন্ট
+const Counter = ({ value, suffix }: { value: string; suffix: string }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const springValue = useSpring(0, { stiffness: 40, damping: 20 });
+  const displayValue = useTransform(springValue, (current) => Math.round(current));
+
+  useEffect(() => {
+    if (isInView) {
+      springValue.set(parseInt(value));
+    }
+  }, [isInView, value, springValue]);
+
+  return (
+    <span ref={ref} className="flex items-baseline gap-1">
+      <motion.span>{displayValue}</motion.span>
+      <span className="text-xl lg:text-2xl font-black opacity-50">{suffix}</span>
+    </span>
+  );
+};
 
 const Statistics: React.FC = () => {
   const stats = [
     { 
         label: "সফল শিক্ষার্থী", 
-        value: "৫০০", 
+        value: "500", 
         suffix: "+",
-        color: "from-green-400 to-emerald-600",
+        color: "from-emerald-400 to-teal-500",
         icon: "🎓",
-        glow: "shadow-[0_0_30px_rgba(34,197,94,0.3)]",
-        bgLight: "bg-green-50",
-        borderColor: "border-green-200", 
-        hoverGlow: "group-hover:border-green-500 group-hover:shadow-[0_0_25px_rgba(34,197,94,0.3)]"
+        bgLight: "bg-emerald-500/10",
+        borderColor: "border-emerald-500/20", 
     },
     { 
         label: "অভিজ্ঞ মেন্টর", 
-        value: "১০", 
+        value: "10", 
         suffix: "+",
-        color: "from-yellow-400 to-orange-500",
+        color: "from-blue-400 to-indigo-500",
         icon: "👨‍🏫",
-        glow: "shadow-[0_0_30px_rgba(234,179,8,0.3)]",
-        bgLight: "bg-yellow-50",
-        borderColor: "border-yellow-200", 
-        hoverGlow: "group-hover:border-yellow-500 group-hover:shadow-[0_0_25px_rgba(234,179,8,0.3)]"
+        bgLight: "bg-blue-500/10",
+        borderColor: "border-blue-500/20", 
     },
     { 
         label: "সাফল্যের হার", 
-        value: "৯৮", 
+        value: "98", 
         suffix: "%",
-        color: "from-emerald-400 to-teal-600",
+        color: "from-amber-400 to-orange-500",
         icon: "📈",
-        glow: "shadow-[0_0_30px_rgba(20,184,166,0.3)]",
-        bgLight: "bg-emerald-50",
-        borderColor: "border-emerald-200", 
-        hoverGlow: "group-hover:border-emerald-500 group-hover:shadow-[0_0_25px_rgba(20,184,166,0.3)]"
+        bgLight: "bg-amber-500/10",
+        borderColor: "border-amber-500/20", 
     },
     { 
         label: "বছরের অভিজ্ঞতা", 
-        value: "১৫", 
+        value: "15", 
         suffix: "+",
-        color: "from-orange-400 to-red-500",
+        color: "from-rose-400 to-red-500",
         icon: "🏆",
-        glow: "shadow-[0_0_30px_rgba(249,115,22,0.3)]",
-        bgLight: "bg-orange-50",
-        borderColor: "border-orange-200", 
-        hoverGlow: "group-hover:border-orange-500 group-hover:shadow-[0_0_25px_rgba(249,115,22,0.3)]"
+        bgLight: "bg-rose-500/10",
+        borderColor: "border-rose-500/20", 
     },
   ];
 
   return (
-    <section className="relative py-10 lg:py-36 bg-[#fcfcfc] overflow-hidden">
+    <section className="relative py-20 lg:py-32 bg-[#0a192f] overflow-hidden border-t border-white/5">
       
-      {/* 🌌 Background Icons */}
-      <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
-        <div className="absolute top-[5%] left-[5%] text-4xl lg:text-8xl opacity-10 lg:opacity-30 animate-float">🧪</div>
-        <div className="absolute top-[10%] right-[5%] text-5xl lg:text-9xl opacity-10 lg:opacity-30 animate-spin-slow">⚛️</div>
+      {/* 🌌 আধুনিক ব্যাকগ্রাউন্ড এলিমেন্টস */}
+      <div className="absolute inset-0 pointer-events-none select-none opacity-40">
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:40px_40px]" />
+        <div className="absolute top-[20%] right-[-5%] w-96 h-96 bg-blue-600/10 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[20%] left-[-5%] w-96 h-96 bg-emerald-600/10 blur-[120px] rounded-full" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-10 md:px-6 relative z-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-10">
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        
+        {/* সেকশন হেডার (ঐচ্ছিক) */}
+        <div className="text-center mb-16">
+            <h3 className="text-emerald-400 font-bold uppercase tracking-widest text-sm mb-2">আমাদের অর্জন</h3>
+            <h2 className="text-3xl md:text-4xl font-black text-white">সাফল্যের কিছু পরিসংখ্যান</h2>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {stats.map((stat, index) => (
             <motion.div 
               key={index} 
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.3 }} // যতবার স্ক্রল করবে ততবার এনিমেশন হবে
-              transition={{ 
-                duration: 0.6, 
-                delay: index * 0.1, // একেকটি কার্ড একটু পর পর আসবে
-                ease: "easeOut" 
-              }}
-              className="relative group"
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="group relative"
             >
-              
-              {/* Outer Glow Background */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${stat.color} opacity-0 group-hover:opacity-5 blur-2xl transition-opacity duration-700 rounded-[30px] lg:rounded-[40px]`} />
-
-              {/* Main Card with Static Border and Hover Glow */}
-              <div className={`relative bg-white/80 backdrop-blur-md border-2 p-6 lg:p-10 rounded-[30px] lg:rounded-[40px] shadow-[0_10px_30px_rgba(0,0,0,0.02)] transition-all duration-500 flex flex-col items-center hover:-translate-y-2 ${stat.borderColor} ${stat.hoverGlow}`}>
+              {/* কার্ড কন্টেইনার */}
+              <div className={`h-full relative bg-white/[0.03] backdrop-blur-xl border-t border-l ${stat.borderColor} p-8 lg:p-10 rounded-[35px] flex flex-col items-center justify-center transition-all duration-500 hover:bg-white/[0.07] overflow-hidden shadow-2xl shadow-black/20`}>
                 
-                {/* আইকন হোল্ডার */}
-                <div className={`w-14 h-14 lg:w-20 lg:h-20 ${stat.bgLight} ${stat.glow} rounded-2xl lg:rounded-3xl flex items-center justify-center text-2xl lg:text-4xl mb-4 lg:mb-6`}>
+                {/* হোভার করলে শাইন ইফেক্ট */}
+                <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/5 to-transparent -skew-x-12" />
+
+                {/* আইকন বক্স */}
+                <div className={`w-16 h-16 lg:w-20 lg:h-20 ${stat.bgLight} rounded-2xl flex items-center justify-center text-3xl lg:text-4xl mb-6 transform group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500`}>
                   {stat.icon}
                 </div>
 
-                {/* মেইন সংখ্যা */}
-                <div className="flex items-baseline gap-1">
-                  <h2 className={`text-4xl lg:text-6xl font-black bg-gradient-to-br ${stat.color} bg-clip-text text-transparent tracking-tighter`}>
-                    {stat.value}
-                  </h2>
-                  <span className="text-xl lg:text-2xl font-black text-slate-300">{stat.suffix}</span>
-                </div>
+                {/* এনিমেটেড নাম্বার */}
+                <h2 className={`text-4xl lg:text-6xl font-black bg-gradient-to-br ${stat.color} bg-clip-text text-transparent tracking-tighter mb-2`}>
+                  <Counter value={stat.value} suffix={stat.suffix} />
+                </h2>
 
-                <div className="mt-2 lg:mt-4 flex flex-col items-center">
-                    <p className="text-slate-500 font-bold text-[10px] lg:text-sm uppercase tracking-[0.2em]">
-                      {stat.label}
-                    </p>
-                    {/* এনিমেটেড আন্ডারলাইন হোভারে বড় হবে */}
-                    <div className={`w-6 lg:w-8 h-1 lg:h-1.5 bg-gradient-to-r ${stat.color} opacity-30 mt-2 group-hover:w-16 transition-all duration-500 rounded-full`} />
-                </div>
+                {/* লেবেল */}
+                <p className="text-slate-400 font-bold text-xs lg:text-sm uppercase tracking-[0.2em] text-center">
+                  {stat.label}
+                </p>
+
+                {/* ডাইনামিক বটম বার */}
+                <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-1 bg-gradient-to-r ${stat.color} group-hover:w-full transition-all duration-700`} />
               </div>
             </motion.div>
           ))}
         </div>
       </div>
+
+      <style jsx global>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-20px); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow { animation: spin-slow 15s linear infinite; }
+      `}</style>
     </section>
   );
 };

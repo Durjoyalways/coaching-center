@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion"; // Framer Motion ইম্পোর্ট করা হয়েছে
+import { motion } from "framer-motion";
 
 const Programs: React.FC = () => {
   const whatsappNumber = "8801700000000"; // আপনার নম্বরটি এখানে দিন
@@ -12,11 +12,9 @@ const Programs: React.FC = () => {
       classes: "৬ষ্ঠ - ৮ম শ্রেণি",
       description: "বেসিক ফাউন্ডেশন তৈরি এবং স্কুলের সম্পূর্ণ সিলেবাস কভার করার নিশ্চয়তা।",
       features: ["স্কুল সিলেবাস ভিত্তিক ক্লাস", "প্রতি সপ্তাহে বিশেষ কুইজ", "বোর্ড পরীক্ষার প্রস্তুতি"],
-      bg: "bg-green-50/50",
-      accent: "bg-green-500",
-      borderColor: "border-green-200",
-      hoverBorder: "group-hover:border-green-500",
-      glowColor: "rgba(34, 197, 94, 0.4)",
+      gradient: "from-emerald-500/20 to-emerald-600/5",
+      accent: "bg-emerald-500",
+      glow: "group-hover:shadow-emerald-500/20",
       icon: "📚",
       whatsappMsg: "আসসালামু আলাইকুম, আমি জুনিয়র ব্যাচ সম্পর্কে জানতে চাই।"
     },
@@ -25,11 +23,9 @@ const Programs: React.FC = () => {
       classes: "৯ম - ১০ম শ্রেণি",
       description: "বিজ্ঞান, মানবিক ও ব্যবসায় শিক্ষা শাখার শিক্ষার্থীদের জন্য পূর্ণাঙ্গ কোর্স প্ল্যান।",
       features: ["শাখা ভিত্তিক আলাদা ব্যাচ", "অধ্যায় ভিত্তিক লেকচার শিট", "বিগত বছরের প্রশ্ন সলভ"],
-      bg: "bg-yellow-50/50",
-      accent: "bg-yellow-500",
-      borderColor: "border-yellow-200",
-      hoverBorder: "group-hover:border-yellow-500",
-      glowColor: "rgba(234, 179, 8, 0.4)",
+      gradient: "from-blue-500/20 to-indigo-600/5",
+      accent: "bg-blue-500",
+      glow: "group-hover:shadow-blue-500/20",
       icon: "🎓",
       whatsappMsg: "আসসালামু আলাইকুম, আমি এসএসসি প্রস্তুতি সম্পর্কে জানতে চাই।"
     },
@@ -38,111 +34,129 @@ const Programs: React.FC = () => {
       classes: "মডেল টেস্ট ও ইংরেজি",
       description: "পরীক্ষার্থী এবং ইংরেজি গ্রামার ও স্পোকেন-এ দূর্বলদের জন্য বিশেষ আয়োজন।",
       features: ["মডেল টেস্ট সিরিজ", "ইংরেজি গ্রামার স্পেশাল কেয়ার", "সৃজনশীল লিখন কৌশল"],
-      bg: "bg-emerald-50/50",
-      accent: "bg-emerald-500",
-      borderColor: "border-emerald-200",
-      hoverBorder: "group-hover:border-emerald-500",
-      glowColor: "rgba(16, 185, 129, 0.4)",
+      gradient: "from-amber-500/20 to-orange-600/5",
+      accent: "bg-amber-500",
+      glow: "group-hover:shadow-amber-500/20",
       icon: "✨",
       whatsappMsg: "আসসালামু আলাইকুম, আমি স্পেশাল প্রোগ্রাম সম্পর্কে জানতে চাই।"
     }
   ];
 
   return (
-    <section id="programs" className="relative py-10 lg:py-36 bg-[#fcfcfc] overflow-hidden">
+    <section id="programs" className="relative py-24 lg:py-32 bg-[#0a192f] overflow-hidden border-t border-white/5">
       
-      {/* 🌌 Glowing Background Icons */}
+      {/* 🌌 Background Luxury Elements */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
-        <div className="absolute top-[5%] left-[5%] text-5xl lg:text-8xl opacity-10 lg:opacity-30 animate-float">🧪</div>
-        <div className="absolute top-[10%] right-[5%] text-6xl lg:text-9xl opacity-10 lg:opacity-30 animate-spin-slow">⚛️</div>
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-emerald-900/10 blur-[120px] rounded-full animate-pulse" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-900/10 blur-[120px] rounded-full" />
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03]" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-10 md:px-6 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
         
-        {/* সেকশন হেডার অ্যানিমেশন */}
+        {/* সেকশন হেডার */}
         <motion.div 
-          initial={{ opacity: 0, y: -40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.3 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-10 lg:mb-20"
+          viewport={{ once: true }}
+          className="text-center mb-20"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-green-50 border border-green-100 rounded-full text-green-700 font-bold text-[9px] lg:text-[10px] uppercase tracking-[0.2em] mb-4 shadow-sm">
-             <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/5 border border-emerald-500/20 rounded-full text-emerald-400 font-bold text-[10px] lg:text-xs uppercase tracking-[0.3em] mb-6 backdrop-blur-md">
+             <span className="w-2 h-2 bg-emerald-500 rounded-full animate-ping"></span>
              একাডেমিক প্রোগ্রামসমূহ
           </div>
-          <h2 className="text-3xl lg:text-6xl font-black text-slate-900 leading-tight">
-            সেরা প্রস্তুতির জন্য <br /> <span className="text-green-500">সঠিক কোর্স</span> বেছে নিন
+          <h2 className="text-4xl lg:text-6xl font-black text-white leading-tight">
+            সেরা প্রস্তুতির জন্য <br /> 
+            <span className="relative inline-block mt-2">
+                <span className="relative z-10 bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent">সঠিক কোর্স</span>
+                <svg className="absolute -bottom-2 left-0 w-full h-3 text-emerald-500/30" viewBox="0 0 100 10" preserveAspectRatio="none">
+                    <path d="M0 5 Q 25 0 50 5 T 100 5" stroke="currentColor" strokeWidth="4" fill="none" />
+                </svg>
+            </span> বেছে নিন
           </h2>
         </motion.div>
 
-        {/* কার্ড গ্রিড অ্যানিমেশন */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10">
+        {/* কার্ড গ্রিড */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
           {academicPrograms.map((program, index) => (
             <motion.div 
               key={index} 
-              initial={{ opacity: 0, y: 60 }}
+              initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.2 }} // ২০% স্ক্রিনে আসলেই এনিমেশন হবে
-              transition={{ 
-                duration: 0.7, 
-                delay: index * 0.15, // একটির পর একটি কার্ড স্লাইড হয়ে আসবে
-                ease: "easeOut"
-              }}
-              className="relative group"
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              className="group relative h-full"
             >
-              
-              {/* Outer Glow Background on Hover */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${program.accent} opacity-0 group-hover:opacity-5 blur-2xl transition-opacity duration-700 rounded-[35px] lg:rounded-[50px]`} />
-
-              {/* Main Card */}
-              <div className={`relative h-full bg-white/80 backdrop-blur-md border-2 ${program.borderColor} ${program.hoverBorder} p-8 lg:p-10 rounded-[35px] lg:rounded-[50px] shadow-[0_15px_40px_rgba(0,0,0,0.02)] flex flex-col items-center text-center lg:items-start lg:text-left hover:-translate-y-2 transition-all duration-500`}>
+              {/* Card Body */}
+              <div className={`relative h-full bg-gradient-to-b from-white/[0.05] to-transparent backdrop-blur-2xl border border-white/10 p-8 lg:p-10 rounded-[45px] flex flex-col transition-all duration-500 group-hover:bg-white/[0.08] group-hover:border-white/20 shadow-2xl ${program.glow}`}>
                 
-                {/* আইকন হোল্ডার */}
-                <div className={`w-14 h-14 lg:w-16 lg:h-16 rounded-2xl ${program.bg} flex items-center justify-center text-2xl lg:text-3xl mb-6 shadow-inner transform group-hover:rotate-6 transition-all duration-500`}
-                     style={{ filter: `drop-shadow(0 0 10px ${program.glowColor})` }}>
+                {/* Shine Effect on Hover */}
+                <div className="absolute inset-0 rounded-[45px] overflow-hidden pointer-events-none">
+                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
+                </div>
+
+                {/* আইকন বক্স */}
+                <div className={`w-16 h-16 rounded-3xl bg-gradient-to-br ${program.gradient} flex items-center justify-center text-3xl mb-8 border border-white/10 shadow-lg transform group-hover:scale-110 group-hover:-rotate-6 transition-all duration-500`}>
                   {program.icon}
                 </div>
 
-                <div className="flex-grow w-full">
-                  <span className={`inline-block px-4 py-1 rounded-full text-white text-[9px] lg:text-[10px] font-black mb-3 ${program.accent}`}>
+                <div className="flex-grow">
+                  <div className={`inline-block px-4 py-1.5 rounded-xl text-white text-[10px] font-black mb-5 shadow-lg tracking-wider ${program.accent}`}>
                     {program.classes}
-                  </span>
-                  <h3 className="text-2xl lg:text-3xl font-black text-slate-800 mb-4 tracking-tight">{program.title}</h3>
-                  <p className="text-slate-500 font-medium mb-6 lg:mb-8 text-sm lg:text-base leading-relaxed">
+                  </div>
+                  <h3 className="text-2xl lg:text-3xl font-black text-white mb-4 tracking-tight group-hover:text-emerald-300 transition-colors">
+                    {program.title}
+                  </h3>
+                  <p className="text-slate-400 font-medium mb-8 text-sm lg:text-base leading-relaxed">
                     {program.description}
                   </p>
 
-                  <div className="space-y-3 mb-8 flex flex-col items-center lg:items-start">
+                  <ul className="space-y-4 mb-10">
                     {program.features.map((feature, fIndex) => (
-                      <div key={fIndex} className="flex items-center gap-3">
-                        <div className={`w-4 h-4 rounded flex items-center justify-center text-white text-[9px] ${program.accent}`}>
+                      <li key={fIndex} className="flex items-center gap-3 group/item">
+                        <div className={`w-6 h-6 rounded-lg flex items-center justify-center text-white text-[10px] ${program.accent} shadow-md group-hover/item:scale-110 transition-transform`}>
                           ✓
                         </div>
-                        <span className="text-slate-700 font-bold text-xs lg:text-sm">{feature}</span>
-                      </div>
+                        <span className="text-slate-300 font-bold text-xs lg:text-sm">{feature}</span>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 </div>
 
-                {/* WhatsApp Button */}
+                {/* WhatsApp Button - Premium Style */}
                 <a 
                   href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(program.whatsappMsg)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`w-full text-center py-4 lg:py-5 rounded-xl lg:rounded-2xl font-black transition-all duration-300 ${program.accent} text-white hover:brightness-110 active:scale-95 flex items-center justify-center gap-2 text-sm lg:text-base`}
-                  style={{ boxShadow: `0 10px 20px -5px ${program.glowColor}` }}
+                  className={`w-full group/btn relative overflow-hidden py-5 rounded-[22px] font-black transition-all duration-300 bg-white/5 border border-white/10 hover:border-transparent text-white flex items-center justify-center gap-3 text-sm lg:text-base shadow-xl active:scale-95`}
                 >
-                  <span>বিস্তারিত জানুন</span>
-                  <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.588-5.946 0-6.556 5.332-11.891 11.891-11.891 3.181 0 6.167 1.24 8.413 3.488 2.246 2.248 3.484 5.232 3.484 8.402 0 6.556-5.332 11.891-11.891 11.891-2.01 0-3.987-.51-5.742-1.47l-6.334 1.689zm6.086-5.309l.345.204c1.447.86 3.123 1.314 4.858 1.314 4.817 0 8.735-3.918 8.735-8.735 0-2.333-.909-4.524-2.56-6.175-1.651-1.652-3.846-2.561-6.175-2.561-4.817 0-8.735 3.918-8.735 8.735 0 1.68.47 3.32 1.358 4.767l.223.364-.951 3.475 3.562-.951z" />
-                  </svg>
+                  <div className={`absolute inset-0 ${program.accent} opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300`} />
+                  <span className="relative z-10 flex items-center gap-2 group-hover/btn:scale-105 transition-transform duration-300">
+                    বিস্তারিত জানুন 
+                    <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.767 5.767 0 1.267.408 2.445 1.103 3.407l-.722 2.637 2.7-.71c.917.586 2.003.931 3.17.931 3.181 0 5.767-2.586 5.767-5.767s-2.586-5.767-5.767-5.767zm0 10.455c-.993 0-1.923-.312-2.693-.84l-.193-.112-1.61.423.432-1.57-.123-.196a4.63 4.63 0 01-.763-2.553c0-2.558 2.081-4.639 4.639-4.639s4.639 2.081 4.639 4.639-2.081 4.639-4.639 4.639z"/>
+                    </svg>
+                  </span>
                 </a>
               </div>
             </motion.div>
           ))}
         </div>
       </div>
+
+      <style jsx global>{`
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow { animation: spin-slow 25s linear infinite; }
+        
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-15px) rotate(2deg); }
+        }
+        .animate-float { animation: float 10s ease-in-out infinite; }
+      `}</style>
     </section>
   );
 };

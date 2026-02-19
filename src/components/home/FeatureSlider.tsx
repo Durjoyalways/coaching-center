@@ -1,92 +1,96 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion"; // Framer Motion ইম্পোর্ট করা হয়েছে
+import { motion } from "framer-motion";
 
 const FeatureSlider: React.FC = () => {
   const items = [
-    { name: "গণিত", icon: "📐", border: "border-green-500" },
-    { name: "পদার্থবিজ্ঞান", icon: "⚛️", border: "border-yellow-500" },
-    { name: "রসায়ন", icon: "🧪", border: "border-green-500" },
-    { name: "ইংরেজি স্পোকেন", icon: "🗣️", border: "border-yellow-500" },
-    { name: "জীববিজ্ঞান", icon: "🧬", border: "border-green-500" },
-    { name: "উচ্চতর গণিত", icon: "📊", border: "border-yellow-500" },
-    { name: "মডেল টেস্ট", icon: "📝", border: "border-green-500" },
-    { name: "প্রশ্ন সলভ", icon: "🔍", border: "border-yellow-500" },
-    { name: "সেরা শিক্ষক", icon: "👨‍🏫", border: "border-green-500" },
+    { name: "গণিত", icon: "📐", color: "from-emerald-500 to-teal-600" },
+    { name: "পদার্থবিজ্ঞান", icon: "⚛️", color: "from-blue-500 to-indigo-600" },
+    { name: "রসায়ন", icon: "🧪", color: "from-amber-400 to-orange-600" },
+    { name: "ইংরেজি স্পোকেন", icon: "🗣️", color: "from-rose-500 to-pink-600" },
+    { name: "জীববিজ্ঞান", icon: "🧬", color: "from-green-400 to-emerald-600" },
+    { name: "উচ্চতর গণিত", icon: "📊", color: "from-violet-500 to-purple-600" },
+    { name: "মডেল টেস্ট", icon: "📝", color: "from-cyan-400 to-blue-600" },
+    { name: "প্রশ্ন সলভ", icon: "🔍", color: "from-yellow-400 to-orange-500" },
+    { name: "সেরা শিক্ষক", icon: "👨‍🏫", color: "from-emerald-400 to-teal-500" },
   ];
 
   return (
-    <div className="relative py-10 lg:py-20 bg-[#fcfcfc] overflow-hidden">
+    <div className="relative py-14 lg:py-24 bg-[#0a192f] overflow-hidden">
       
-      {/* 🌌 Background Glowing Decorations */}
-      <div className="absolute inset-0 pointer-events-none select-none">
-        <div className="absolute top-0 left-10 text-4xl lg:text-6xl opacity-10 animate-float"
-             style={{ filter: 'drop-shadow(0 0 10px rgba(34, 197, 94, 0.4))' }}>🧪</div>
-        <div className="absolute bottom-0 right-10 text-4xl lg:text-6xl opacity-10 animate-spin-slow"
-             style={{ filter: 'drop-shadow(0 0 10px rgba(234, 179, 8, 0.4))' }}>⚛️</div>
+      {/* 🌌 Background Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-emerald-500/5 blur-[120px] rounded-full" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 mb-8 lg:mb-14 text-center relative z-10">
-        
-        {/* হেডার এনিমেশন - প্রতিবার স্ক্রল করলে আসবে */}
+      <div className="max-w-7xl mx-auto px-6 mb-12 text-center relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.3 }}
-          transition={{ duration: 0.7 }}
+          viewport={{ once: false }}
+          transition={{ duration: 0.6 }}
         >
-          {/* মডার্ন পালসিং ব্যাজ */}
-          <div className="inline-flex items-center gap-2.5 px-4 lg:px-5 py-1.5 lg:py-2 rounded-full bg-white border border-slate-100 mb-4 lg:mb-6 shadow-sm">
-              <span className="flex h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse"></span>
-              <h3 className="text-slate-500 font-black uppercase tracking-[0.2em] lg:tracking-[0.3em] text-[9px] lg:text-xs">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
+              <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              <h3 className="text-emerald-400 font-bold uppercase tracking-[0.25em] text-[10px] lg:text-xs">
                 আমাদের বিশেষত্ব ও সেবাসমূহ
               </h3>
           </div>
-          <h2 className="text-2xl md:text-5xl font-black text-slate-900 tracking-tight">
-            সবকিছু <span className="text-green-500">এক জায়গায়</span>
+          <h2 className="text-3xl md:text-5xl font-black text-white tracking-tight">
+            সবকিছু <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">এক জায়গায়</span>
           </h2>
         </motion.div>
       </div>
 
-      {/* স্লাইডার কন্টেইনার এনিমেশন */}
+      {/* স্লাইডার কন্টেইনার */}
       <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: false, amount: 0.2 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative flex items-center group"
+        className="relative flex items-center"
       >
-        
-        {/* দুই পাশে প্রফেশনাল ফেড ইফেক্ট (Glass Mask) */}
-        <div className="absolute left-0 w-16 md:w-64 h-full bg-gradient-to-r from-[#fcfcfc] via-[#fcfcfc]/80 to-transparent z-20 pointer-events-none" />
-        <div className="absolute right-0 w-16 md:w-64 h-full bg-gradient-to-l from-[#fcfcfc] via-[#fcfcfc]/80 to-transparent z-20 pointer-events-none" />
+        {/* প্রফেশনাল ফেড ইফেক্ট */}
+        <div className="absolute left-0 w-24 md:w-80 h-full bg-gradient-to-r from-[#0a192f] via-[#0a192f]/80 to-transparent z-20 pointer-events-none" />
+        <div className="absolute right-0 w-24 md:w-80 h-full bg-gradient-to-l from-[#0a192f] via-[#0a192f]/80 to-transparent z-20 pointer-events-none" />
 
-        {/* এনিমেটেড স্লাইডার (Marquee) */}
-        <div className="flex animate-marquee whitespace-nowrap hover:[animation-play-state:paused] py-4 lg:py-8 z-10">
+        {/* এনিমেটেড স্লাইডার */}
+        <div className="flex animate-marquee whitespace-nowrap hover:[animation-play-state:paused] py-10 z-10">
           {[...items, ...items].map((item, index) => (
             <div
               key={index}
-              className={`mx-3 lg:mx-6 px-5 lg:px-8 py-3 lg:py-5 rounded-[20px] lg:rounded-[28px] flex items-center gap-3 lg:gap-4 border-[3px] ${item.border} bg-white/80 backdrop-blur-md shadow-[0_5px_15px_rgba(0,0,0,0.03)] transition-all duration-500 hover:scale-105 lg:hover:scale-110 hover:-translate-y-1 lg:hover:-translate-y-2 cursor-pointer group/item hover:bg-white hover:shadow-2xl`}
+              className="mx-4 lg:mx-6 group cursor-pointer"
             >
-              {/* Icon Holder with drop shadow */}
-              <div className="text-xl lg:text-3xl transform group-hover/item:rotate-12 transition-transform duration-500 drop-shadow-sm">
-                {item.icon}
+              {/* মডার্ন নিওন কার্ড ডিজাইন */}
+              <div className="relative p-[1.5px] rounded-2xl lg:rounded-3xl bg-white/10 group-hover:bg-gradient-to-br transition-all duration-500 overflow-hidden shadow-xl shadow-black/20 group-hover:shadow-emerald-500/20">
+                
+                {/* কার্ড কন্টেন্ট */}
+                <div className="relative bg-[#0d1e36] px-6 lg:px-10 py-5 lg:py-7 rounded-2xl lg:rounded-3xl flex items-center gap-4 lg:gap-6 z-10 border border-white/5 group-hover:border-white/10 transition-all">
+                  
+                  {/* আইকন হোল্ডার */}
+                  <div className={`w-12 h-12 lg:w-16 lg:h-16 flex items-center justify-center rounded-xl lg:rounded-2xl bg-gradient-to-br ${item.color} shadow-lg shadow-black/40 transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
+                    <span className="text-2xl lg:text-3xl filter drop-shadow-md">
+                      {item.icon}
+                    </span>
+                  </div>
+                  
+                  <div className="flex flex-col">
+                    <span className="font-bold text-lg lg:text-2xl text-slate-100 tracking-tight group-hover:text-white transition-colors">
+                      {item.name}
+                    </span>
+                    <span className="text-[10px] lg:text-[11px] text-slate-400 font-bold uppercase tracking-widest mt-1 opacity-60 group-hover:opacity-100 transition-opacity">
+                      Premium Class
+                    </span>
+                  </div>
+                </div>
+
+                {/* হোভার করলে নিচে একটি গ্লোয়িং লাইন আসবে */}
+                <div className={`absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r ${item.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
               </div>
-              
-              <span className="font-black text-base lg:text-2xl text-slate-700 tracking-tight group-hover/item:text-green-600 transition-colors">
-                {item.name}
-              </span>
-              
-              {/* Inner Accent Dot matching the border */}
-              <div className={`w-1 h-1 lg:w-1.5 lg:h-1.5 rounded-full ${item.border === 'border-green-500' ? 'bg-green-500' : 'bg-yellow-500'} transition-all`}></div>
             </div>
           ))}
         </div>
       </motion.div>
 
-      {/* স্লাইডারটির নিচে একটি হালকা শেড */}
-      <div className="max-w-4xl mx-auto h-[1px] bg-gradient-to-r from-transparent via-slate-100 to-transparent mt-8 lg:mt-12 opacity-50"></div>
+      {/* ডেকোরেটিভ ডিভাইডার */}
+      <div className="max-w-4xl mx-auto h-[1px] bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent mt-12 opacity-50"></div>
     </div>
   );
 };
